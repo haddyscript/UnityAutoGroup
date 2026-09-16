@@ -1,5 +1,6 @@
 import heroVideo from '../../assets/videos/hero-boomerang-video.mp4'
 import { ButtonLink } from '../shared/Button'
+import { Marquee } from '../shared/Marquee'
 
 export function Hero() {
   return (
@@ -15,7 +16,11 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
 
       <div className="relative z-10 ml-auto w-full max-w-xl px-4 pt-40 pb-16 sm:px-8 sm:pb-24">
-        <p className="font-mono text-xs tracking-[0.3em] text-green-500 uppercase">Unity Auto Group</p>
+        <Marquee
+          text="Unity Auto Group"
+          className="w-56 sm:w-64"
+          textClassName="font-mono text-xs tracking-[0.3em] text-green-500 uppercase"
+        />
         <h1 className="mt-4 font-serif text-4xl text-white italic sm:text-5xl">
           Be moved —
           <br />
