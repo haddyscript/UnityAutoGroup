@@ -1,11 +1,11 @@
 import type { LucideIcon } from 'lucide-react'
 import { Battery, Car, Cog, Gauge, Thermometer, Wrench } from 'lucide-react'
-import batteryServiceImage from '../assets/images/services/battery-service.jpg'
-import brakeRepairImage from '../assets/images/services/brake-repair.jpg'
-import coolingSystemImage from '../assets/images/services/Cooling-System.jpg'
-import engineDiagnosticsImage from '../assets/images/services/Engine-Diagnostics.jpg'
-import generalRepairImage from '../assets/images/services/General-Repair.jpg'
-import mobileTuneUpImage from '../assets/images/services/Mobile-Tune-Up.jpg'
+import batteryServiceImage from '../assets/images/services/battery-service.webp'
+import brakeRepairImage from '../assets/images/services/brake-repair.webp'
+import coolingSystemImage from '../assets/images/services/cooling-system.webp'
+import engineDiagnosticsImage from '../assets/images/services/engine-diagnostics.webp'
+import generalRepairImage from '../assets/images/services/general-repair.webp'
+import mobileTuneUpImage from '../assets/images/services/mobile-tune-up.webp'
 
 export type ServiceCategory = 'shop' | 'mobile' | 'both'
 
