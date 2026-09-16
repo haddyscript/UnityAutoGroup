@@ -1,30 +1,25 @@
-import { Wrench } from 'lucide-react'
-import { gsap } from 'gsap'
-import { useEffect, useRef } from 'react'
 import { Route, Routes } from 'react-router-dom'
-
-function Home() {
-  const iconRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    gsap.from(iconRef.current, { opacity: 0, y: 12, duration: 0.6 })
-  }, [])
-
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-black text-gray-100">
-      <div ref={iconRef} className="flex items-center gap-2 text-green-500">
-        <Wrench size={32} />
-        <span className="text-2xl font-semibold">Unity Auto Group</span>
-      </div>
-      <p className="text-gray-400">Tech stack setup complete.</p>
-    </main>
-  )
-}
+import { Layout } from './components/layout/Layout'
+import About from './pages/About'
+import Contact from './pages/Contact'
+import Home from './pages/Home'
+import MobileService from './pages/MobileService'
+import NotFound from './pages/NotFound'
+import Services from './pages/Services'
+import ShopService from './pages/ShopService'
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/shop-service" element={<ShopService />} />
+        <Route path="/mobile-service" element={<MobileService />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
     </Routes>
   )
 }
