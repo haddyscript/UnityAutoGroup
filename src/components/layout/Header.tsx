@@ -1,7 +1,8 @@
 import { useLenis } from 'lenis/react'
-import { Menu, Wrench, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
+import logo from '../../assets/unity-auto-group-logo.webp'
 import { navItems } from '../../data/nav'
 import { ButtonLink } from '../shared/Button'
 import { MobileNav } from './MobileNav'
@@ -47,11 +48,8 @@ export function Header() {
       } ${headerState}`}
     >
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
-        <NavLink to="/" className="flex items-center gap-2.5 text-white" onClick={() => setMenuOpen(false)}>
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-green-500/10 ring-1 ring-green-500/40">
-            <Wrench className="text-green-500" size={18} />
-          </span>
-          <span className="text-base font-semibold tracking-tight sm:text-lg">Unity Auto Group</span>
+        <NavLink to="/" onClick={() => setMenuOpen(false)}>
+          <img src={logo} alt="Unity Auto Group" className="h-9 w-auto sm:h-11" />
         </NavLink>
 
         <nav className="hidden items-center gap-8 lg:flex">
