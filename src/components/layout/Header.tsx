@@ -5,6 +5,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 import logo from '../../assets/unity-auto-group-logo.webp'
 import { navItems } from '../../data/nav'
 import { ButtonLink } from '../shared/Button'
+import { AnnouncementBar } from './AnnouncementBar'
 import { MobileNav } from './MobileNav'
 
 export function Header() {
@@ -47,6 +48,8 @@ export function Header() {
         menuOpen ? 'h-dvh' : ''
       } ${headerState}`}
     >
+      <AnnouncementBar />
+
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
         <NavLink to="/" onClick={() => setMenuOpen(false)}>
           <img src={logo} alt="Unity Auto Group" className="h-9 w-auto sm:h-11" />
