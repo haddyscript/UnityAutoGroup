@@ -31,7 +31,7 @@ export function ServicesOverview() {
         </Container>
       </div>
 
-      <Container className="py-20">
+      <Container className="pt-20 pb-32 sm:pb-40">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service) => (
             <ServiceCard key={service.id} service={service} />

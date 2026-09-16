@@ -1,6 +1,11 @@
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Clock, MapPin, ShieldCheck } from 'lucide-react'
+import { useEffect, useRef } from 'react'
 import { Container } from '../shared/Container'
 import { SectionHeading } from '../shared/SectionHeading'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const reasons = [
   {
@@ -21,13 +26,36 @@ const reasons = [
 ]
 
 export function WhyChooseUs() {
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('[data-reveal]', {
+        opacity: 0,
+        y: 40,
+        duration: 0.9,
+        ease: 'power3.out',
+        stagger: 0.15,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 75%',
+          toggleActions: 'play reverse play reverse',
+        },
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <section className="border-t border-gray-800 bg-gray-950 py-20">
+    <section ref={sectionRef} className="border-t border-gray-800 bg-gray-950 pt-32 pb-20 sm:pt-40">
       <Container>
-        <SectionHeading eyebrow="Why Unity Auto Group" title="Repair, Simplified" />
+        <div data-reveal>
+          <SectionHeading eyebrow="Why Unity Auto Group" title="Repair, Simplified" />
+        </div>
         <div className="mt-12 grid gap-8 sm:grid-cols-3">
           {reasons.map((reason) => (
-            <div key={reason.title} className="text-center">
+            <div key={reason.title} data-reveal className="text-center">
               <reason.icon className="mx-auto text-green-500" size={28} />
               <h3 className="mt-4 text-lg font-semibold text-white">{reason.title}</h3>
               <p className="mt-2 text-sm text-gray-400">{reason.description}</p>
