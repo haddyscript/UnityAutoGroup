@@ -8,7 +8,7 @@ import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ReactLenis root options={{ lerp: 0.1, duration: 1.2, smoothWheel: true }}>
+    <ReactLenis root options={{ lerp: 0.075, duration: 1.4, wheelMultiplier: 0.85, smoothWheel: true }}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
