@@ -1,3 +1,4 @@
+import { useLenis } from 'lenis/react'
 import { Menu, Wrench, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
@@ -11,6 +12,7 @@ export function Header() {
   const { pathname } = useLocation()
   const isHome = pathname === '/'
   const transparent = isHome && !scrolled && !menuOpen
+  const lenis = useLenis()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -19,15 +21,32 @@ export function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => {
+    if (menuOpen) {
+      lenis?.stop()
+      document.documentElement.style.overflow = 'hidden'
+    } else {
+      lenis?.start()
+      document.documentElement.style.overflow = ''
+    }
+    return () => {
+      document.documentElement.style.overflow = ''
+    }
+  }, [menuOpen, lenis])
+
+  const headerState = menuOpen
+    ? 'border-transparent bg-black'
+    : transparent
+      ? 'border-transparent bg-transparent'
+      : 'border-white/10 bg-black/85 shadow-lg shadow-black/30 backdrop-blur-md'
+
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        transparent
-          ? 'border-b border-transparent bg-transparent'
-          : 'border-b border-white/10 bg-black/85 shadow-lg shadow-black/30 backdrop-blur-md'
-      }`}
+      className={`fixed inset-x-0 top-0 z-50 flex flex-col border-b transition-all duration-300 ${
+        menuOpen ? 'h-dvh' : ''
+      } ${headerState}`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
         <NavLink to="/" className="flex items-center gap-2.5 text-white" onClick={() => setMenuOpen(false)}>
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-green-500/10 ring-1 ring-green-500/40">
             <Wrench className="text-green-500" size={18} />

@@ -10,38 +10,44 @@ interface MobileNavProps {
 }
 
 export function MobileNav({ open, onNavigate }: MobileNavProps) {
-  const panelRef = useRef<HTMLDivElement>(null)
+  const itemsRef = useRef<(HTMLAnchorElement | null)[]>([])
 
   useEffect(() => {
-    if (open && panelRef.current) {
-      gsap.fromTo(panelRef.current, { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' })
-    }
+    if (!open) return
+    const items = itemsRef.current.filter((el): el is HTMLAnchorElement => Boolean(el))
+    gsap.fromTo(items, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', stagger: 0.05 })
   }, [open])
 
   if (!open) return null
 
   return (
-    <div ref={panelRef} className="border-t border-white/10 bg-black/95 backdrop-blur-md lg:hidden">
-      <nav className="flex flex-col gap-1 px-4 py-6">
-        {navItems.map((item) => (
+    <div className="flex flex-1 flex-col overflow-y-auto lg:hidden">
+      <nav className="flex flex-1 flex-col justify-center gap-1 px-6">
+        {navItems.map((item, index) => (
           <NavLink
             key={item.path}
             to={item.path}
             end={item.path === '/'}
             onClick={onNavigate}
+            ref={(el) => {
+              itemsRef.current[index] = el
+            }}
             className={({ isActive }) =>
-              `rounded-md px-3 py-3 text-sm font-medium tracking-wide uppercase transition-colors ${
-                isActive ? 'bg-white/5 text-green-500' : 'text-gray-300 hover:bg-white/5 hover:text-white'
+              `border-b border-white/5 py-4 text-2xl font-medium tracking-tight uppercase transition-colors ${
+                isActive ? 'text-green-500' : 'text-white/90 hover:text-green-400'
               }`
             }
           >
             {item.label}
           </NavLink>
         ))}
-        <ButtonLink to="/" onClick={onNavigate} className="mt-3 w-full">
+      </nav>
+
+      <div className="border-t border-white/10 px-6 py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+        <ButtonLink to="/" onClick={onNavigate} className="w-full">
           Get a Quote
         </ButtonLink>
-      </nav>
+      </div>
     </div>
   )
 }
