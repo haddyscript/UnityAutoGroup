@@ -6,7 +6,7 @@ import { ServiceCard } from '../shared/ServiceCard'
 
 export function ServicesOverview() {
   return (
-    <section className="border-t border-gray-800 py-20">
+    <section className="border-t border-gray-800 pt-32 pb-20 sm:pt-40">
       <Container>
         <SectionHeading eyebrow="Services" title="What We Repair" />
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
