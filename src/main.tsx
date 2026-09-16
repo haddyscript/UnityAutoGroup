@@ -1,4 +1,5 @@
 import '@fontsource-variable/eb-garamond'
+import '@fontsource/bebas-neue'
 import 'lenis/dist/lenis.css'
 import { ReactLenis } from 'lenis/react'
 import { StrictMode } from 'react'
