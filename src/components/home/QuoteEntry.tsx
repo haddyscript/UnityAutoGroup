@@ -2,6 +2,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Car, Store } from 'lucide-react'
 import { useEffect, useRef } from 'react'
+import mobileServiceImage from '../../assets/images/mobile-auto-mechanic.avif'
 import shopServiceImage from '../../assets/images/shop-service.jpg'
 import { ButtonLink } from '../shared/Button'
 import { Container } from '../shared/Container'
@@ -22,13 +23,13 @@ const options = [
     title: 'Mobile Service',
     description: 'Our technician comes to you, fully equipped to repair on-site.',
     to: '/mobile-service',
-    image: null,
+    image: mobileServiceImage,
   },
 ]
 
 export function QuoteEntry() {
   const sectionRef = useRef<HTMLElement>(null)
-  const imageRef = useRef<HTMLImageElement>(null)
+  const imageRefs = useRef<(HTMLImageElement | null)[]>([])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -44,22 +45,21 @@ export function QuoteEntry() {
         },
       })
 
-      if (imageRef.current) {
-        gsap.fromTo(
-          imageRef.current,
-          { yPercent: -58 },
-          {
-            yPercent: -42,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: true,
-            },
+      const images = imageRefs.current.filter((el): el is HTMLImageElement => Boolean(el))
+      gsap.fromTo(
+        images,
+        { yPercent: -58 },
+        {
+          yPercent: -42,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
           },
-        )
-      }
+        },
+      )
     }, sectionRef)
 
     return () => ctx.revert()
@@ -84,24 +84,20 @@ export function QuoteEntry() {
         </p>
 
         <div className="mt-16 grid gap-6 sm:grid-cols-2">
-          {options.map((option) => (
+          {options.map((option, index) => (
             <div
               key={option.title}
               data-reveal
               className="relative h-96 overflow-hidden rounded-xl border border-gray-800"
             >
-              {option.image ? (
-                <img
-                  ref={imageRef}
-                  src={option.image}
-                  alt=""
-                  className="absolute inset-x-0 top-1/2 h-[130%] w-full object-cover"
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 to-black">
-                  <option.icon className="text-white/5" size={160} strokeWidth={1} />
-                </div>
-              )}
+              <img
+                ref={(el) => {
+                  imageRefs.current[index] = el
+                }}
+                src={option.image}
+                alt=""
+                className="absolute inset-x-0 top-1/2 h-[130%] w-full object-cover"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/10" />
 
               <div className="absolute inset-x-0 bottom-0 p-8 text-center">
