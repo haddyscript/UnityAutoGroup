@@ -15,6 +15,19 @@
 
 ---
 
+## NOTE — TWO SERVICE PRESENCES (SHOP + MOBILE)
+
+> hmmm so naay duha ka presence ang unity auto group mga bai, ang mobile service, meaning kanang sila mismo muadto sa mga ganahan magparepair - nakasakyanan ra ni sila with all thier tools pang-ayo, and ang physical nga shop gyud. so right now, dapat atua sad ng maincorporate sa website.
+
+**Translation/clarification:** Unity Auto Group has **two service presences** that both need to be incorporated into the website:
+
+1. **Mobile Service** — the team drives out to the customer's location with a fully equipped repair vehicle and tools to perform the repair on-site.
+2. **Physical Shop** — a physical repair shop location customers can also bring their vehicle to.
+
+Both presences must be represented on the website going forward, alongside the AutoRepairNearHere.com quote/estimate workflow and Epicor integration described below.
+
+---
+
 ## PROJECT GOAL
 
 Develop a modern, customer-facing mobile automotive repair website for Unity Auto Group / AutoRepairNearHere.com that allows customers to begin the vehicle repair estimating and service-request process directly through the website.
