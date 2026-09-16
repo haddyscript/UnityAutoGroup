@@ -5,27 +5,24 @@ interface ServiceCardProps {
 }
 
 export function ServiceCard({ service }: ServiceCardProps) {
-  const Icon = service.icon
-
   return (
-    <div className="group overflow-hidden rounded-xl border border-gray-800 bg-gray-950 transition-all duration-300 hover:-translate-y-1 hover:border-green-500/40 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4),0_0_30px_rgba(34,197,94,0.12)]">
+    <div className="group relative h-80 overflow-hidden rounded-xl border border-gray-800">
       {service.image && (
-        <div className="relative aspect-video overflow-hidden">
-          <img
-            src={service.image}
-            alt=""
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-        </div>
+        <img
+          src={service.image}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
       )}
+      <div className="absolute inset-0 bg-black/50 transition-colors duration-300 group-hover:bg-black/75" />
 
-      <div className="p-6">
-        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-green-500/10 ring-1 ring-green-500/40 transition-transform duration-300 group-hover:scale-110">
-          <Icon className="text-green-500" size={22} />
-        </span>
-        <h3 className="mt-4 text-lg font-semibold text-white">{service.title}</h3>
-        <p className="mt-2 text-sm text-gray-400">{service.description}</p>
+      <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+        <div className="translate-y-16 transition-transform duration-300 ease-out group-hover:translate-y-0">
+          <h3 className="text-lg font-semibold text-white">{service.title}</h3>
+          <p className="mt-2 text-sm text-gray-300 opacity-0 transition-opacity delay-100 duration-300 group-hover:opacity-100">
+            {service.description}
+          </p>
+        </div>
       </div>
     </div>
   )

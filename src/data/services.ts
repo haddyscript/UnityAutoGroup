@@ -1,5 +1,3 @@
-import type { LucideIcon } from 'lucide-react'
-import { Battery, Car, Cog, Gauge, Thermometer, Wrench } from 'lucide-react'
 import batteryServiceImage from '../assets/images/services/battery-service.webp'
 import brakeRepairImage from '../assets/images/services/brake-repair.webp'
 import coolingSystemImage from '../assets/images/services/cooling-system.webp'
@@ -14,7 +12,6 @@ export interface Service {
   title: string
   description: string
   category: ServiceCategory
-  icon: LucideIcon
   image?: string
 }
 
@@ -25,7 +22,6 @@ export const services: Service[] = [
     title: 'Battery Service',
     description: 'Testing, jump-starts, and battery replacement.',
     category: 'both',
-    icon: Battery,
     image: batteryServiceImage,
   },
   {
@@ -33,7 +29,6 @@ export const services: Service[] = [
     title: 'Brake Repair',
     description: 'Brake pad, rotor, and full brake system service.',
     category: 'both',
-    icon: Gauge,
     image: brakeRepairImage,
   },
   {
@@ -41,7 +36,6 @@ export const services: Service[] = [
     title: 'Engine Diagnostics',
     description: 'Check-engine-light diagnosis and troubleshooting.',
     category: 'shop',
-    icon: Cog,
     image: engineDiagnosticsImage,
   },
   {
@@ -49,7 +43,6 @@ export const services: Service[] = [
     title: 'Cooling System',
     description: 'Radiator, coolant, and overheating repairs.',
     category: 'both',
-    icon: Thermometer,
     image: coolingSystemImage,
   },
   {
@@ -57,7 +50,6 @@ export const services: Service[] = [
     title: 'General Repair',
     description: 'Everyday mechanical repairs and maintenance.',
     category: 'shop',
-    icon: Wrench,
     image: generalRepairImage,
   },
   {
@@ -65,7 +57,6 @@ export const services: Service[] = [
     title: 'Mobile Tune-Up',
     description: 'On-site tune-ups wherever your vehicle is parked.',
     category: 'mobile',
-    icon: Car,
     image: mobileTuneUpImage,
   },
 ]
