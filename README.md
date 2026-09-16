@@ -1,32 +1,66 @@
-# React + TypeScript + Vite
+# Unity Auto Group — Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+The official website for **Unity Auto Group** ([AutoRepairNearHere.com](https://autorepairnearhere.com)), an automotive repair business offering both **in-shop repair service** and **mobile repair service** (technicians travel to the customer).
 
-Currently, two official plugins are available:
+The site guides customers through a simple journey — enter vehicle and repair information, get an estimated quote, and submit a service request — before Unity Auto Group follows up to confirm parts and schedule the repair at the shop or on-site.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Project Status
 
-## React Compiler
+🚧 **In active planning / early development.** See [`PLANNING.md`](./PLANNING.md) for the full implementation plan and [`Unity_Auto_Group_Website_Development_Instructions.md`](./Unity_Auto_Group_Website_Development_Instructions.md) for the client-authorized project brief.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the Oxlint configuration
+- [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vite.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [React Router](https://reactrouter.com/)
+- [Lucide React](https://lucide.dev/) for icons
+- [GSAP](https://gsap.com/) / ScrollTrigger, used sparingly for scroll-based animation
+- Deployment target: [Hostinger](https://www.hostinger.com/)
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## Brand
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+- **Domain:** AutoRepairNearHere.com
+- **Approved colors:** Green • Black • Gray
+- **Design/UX reference:** [FixMyCar.io](https://fixmycar.io) — used strictly as a workflow and simplicity reference, not to be copied
+
+## Getting Started
+
+Requires Node.js 18+.
+
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+The app runs locally at `http://localhost:5173` by default.
+
+### Available Scripts
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the local development server with hot reload |
+| `npm run build` | Type-check and build the production bundle |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Run Oxlint against the codebase |
+
+## Project Structure
+
+```
+src/
+  pages/          # Route-level pages (Home, Services, Shop Service, Mobile Service, About, Contact)
+  components/     # Reusable UI, organized by feature area
+  data/           # Site configuration and content data (services, scheduling, etc.)
+  integrations/   # Third-party integrations (e.g. Epicor)
+  hooks/          # Shared React hooks
+  lib/            # Utility functions
+  assets/         # Images and static assets
+```
+
+See [`PLANNING.md`](./PLANNING.md) for the full architecture rationale.
+
+## Documentation
+
+- [`PLANNING.md`](./PLANNING.md) — implementation plan: architecture, pages, data model, phases, and open questions
+- [`Unity_Auto_Group_Website_Development_Instructions.md`](./Unity_Auto_Group_Website_Development_Instructions.md) — client-authorized project brief and development direction
+- [`v1-plan.md`](./v1-plan.md) — original planning brief
