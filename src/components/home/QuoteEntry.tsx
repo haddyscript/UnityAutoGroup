@@ -13,13 +13,11 @@ const options = [
   {
     title: 'Shop Service',
     description: "Bring your vehicle to Unity Auto Group's physical repair shop.",
-    to: '/shop-service',
     image: shopServiceImage,
   },
   {
     title: 'Mobile Service',
     description: 'Our technician comes to you, fully equipped to repair on-site.',
-    to: '/mobile-service',
     image: mobileServiceImage,
   },
 ]

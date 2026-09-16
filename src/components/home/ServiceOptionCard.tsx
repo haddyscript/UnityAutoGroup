@@ -1,7 +1,8 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef } from 'react'
-import { ButtonLink } from '../shared/Button'
+import { openQuotePopup } from '../../lib/quote'
+import { Button } from '../shared/Button'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -9,10 +10,9 @@ interface ServiceOptionCardProps {
   image: string
   title: string
   description: string
-  to: string
 }
 
-export function ServiceOptionCard({ image, title, description, to }: ServiceOptionCardProps) {
+export function ServiceOptionCard({ image, title, description }: ServiceOptionCardProps) {
   const cardRef = useRef<HTMLDivElement>(null)
   const imageRef = useRef<HTMLImageElement>(null)
   const shineRef = useRef<HTMLDivElement>(null)
@@ -79,9 +79,9 @@ export function ServiceOptionCard({ image, title, description, to }: ServiceOpti
       <div className="absolute inset-x-0 bottom-0 p-8 text-center">
         <h3 className="text-xl font-semibold text-white">{title}</h3>
         <p className="mt-2 text-sm text-gray-300">{description}</p>
-        <ButtonLink to={to} className="mt-6 inline-flex">
+        <Button onClick={openQuotePopup} className="mt-6 inline-flex">
           Get a Quote
-        </ButtonLink>
+        </Button>
       </div>
     </div>
   )
