@@ -1,11 +1,39 @@
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useEffect, useRef } from 'react'
 import heroVideo from '../../assets/videos/hero-boomerang-video.mp4'
 import { ButtonLink } from '../shared/Button'
 import { Marquee } from '../shared/Marquee'
 
+gsap.registerPlugin(ScrollTrigger)
+
 export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const fadeRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const scrollTrigger = {
+        trigger: sectionRef.current,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true,
+      }
+
+      gsap.to(videoRef.current, { scale: 1.15, ease: 'none', scrollTrigger })
+      gsap.to(fadeRef.current, { opacity: 1, ease: 'none', scrollTrigger })
+      gsap.to(contentRef.current, { opacity: 0, y: -40, ease: 'none', scrollTrigger })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <section className="relative flex min-h-screen items-end overflow-hidden bg-black">
+    <section ref={sectionRef} className="relative flex min-h-screen items-end overflow-hidden bg-black">
       <video
+        ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover"
         src={heroVideo}
         autoPlay
@@ -14,8 +42,9 @@ export function Hero() {
         playsInline
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
+      <div ref={fadeRef} className="absolute inset-0 bg-black opacity-0" />
 
-      <div className="relative z-10 ml-auto w-full max-w-xl px-4 pt-40 pb-16 sm:px-8 sm:pb-24">
+      <div ref={contentRef} className="relative z-10 ml-auto w-full max-w-xl px-4 pt-40 pb-16 sm:px-8 sm:pb-24">
         <Marquee
           text="Unity Auto Group"
           className="w-56 sm:w-64"
