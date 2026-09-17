@@ -141,32 +141,43 @@ export function SymptomChecker() {
               const isSelected = symptom.id === selected.id
 
               return (
-                <button
-                  key={symptom.id}
-                  type="button"
-                  onClick={() => setSelectedId(symptom.id)}
-                  aria-pressed={isSelected}
-                  className={`flex w-full items-center gap-4 rounded-xl border p-4 text-left transition-colors duration-200 ${
-                    isSelected
-                      ? 'border-green-500/70 bg-green-500/[0.07]'
-                      : 'border-white/5 bg-gray-950 hover:border-white/20'
-                  }`}
-                >
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-white/5 text-green-500">
-                    <Icon size={20} />
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-xs font-semibold tracking-wide text-green-500 uppercase">
-                      {symptom.category}
-                    </span>
-                    <span className="mt-1 block font-semibold text-white">{symptom.label}</span>
-                  </span>
-                  <span
-                    className={`shrink-0 rounded-md px-2.5 py-1 text-xs font-semibold ring-1 ${urgencyBadgeClasses[symptom.urgency]}`}
+                <div key={symptom.id}>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedId(symptom.id)}
+                    aria-pressed={isSelected}
+                    className={`group relative flex w-full cursor-pointer items-center gap-4 overflow-hidden rounded-xl border p-4 text-left transition duration-300 ease-out ${
+                      isSelected
+                        ? 'border-green-500/70 bg-green-500/[0.07]'
+                        : 'border-white/5 bg-gray-950 hover:-translate-y-0.5 hover:border-green-500/40 hover:bg-white/[0.04] hover:shadow-lg hover:shadow-green-500/10'
+                    }`}
                   >
-                    {urgencyLabels[symptom.urgency]}
-                  </span>
-                </button>
+                    <span
+                      aria-hidden
+                      className={`absolute inset-y-0 left-0 w-0.5 origin-top bg-green-500 transition-transform duration-300 ease-out ${
+                        isSelected ? 'scale-y-100' : 'scale-y-0 group-hover:scale-y-100'
+                      }`}
+                    />
+                    <span
+                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-green-500 transition-colors duration-300 ${
+                        isSelected ? 'bg-green-500/15' : 'bg-white/5 group-hover:bg-green-500/10'
+                      }`}
+                    >
+                      <Icon size={20} />
+                    </span>
+                    <span className="min-w-0 flex-1 transition-transform duration-300 ease-out group-hover:translate-x-1">
+                      <span className="block text-xs font-semibold tracking-wide text-green-500 uppercase">
+                        {symptom.category}
+                      </span>
+                      <span className="mt-1 block font-semibold text-white">{symptom.label}</span>
+                    </span>
+                    <span
+                      className={`shrink-0 rounded-md px-2.5 py-1 text-xs font-semibold ring-1 transition-colors duration-300 ${urgencyBadgeClasses[symptom.urgency]}`}
+                    >
+                      {urgencyLabels[symptom.urgency]}
+                    </span>
+                  </button>
+                </div>
               )
             })}
           </div>
