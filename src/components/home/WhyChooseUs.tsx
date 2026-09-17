@@ -35,7 +35,8 @@ export function WhyChooseUs() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top 75%',
-          toggleActions: 'play reverse play reverse',
+          // Rewind once the section is scrolled back past, so returning to it replays the entrance.
+          toggleActions: 'restart none none reset',
         },
       })
     }, sectionRef)
