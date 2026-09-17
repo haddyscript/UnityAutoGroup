@@ -1,7 +1,8 @@
 import { useLenis } from 'lenis/react'
 import { Menu, X } from 'lucide-react'
+import type { MouseEvent } from 'react'
 import { useEffect, useState } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../../assets/unity-auto-group-logo.webp'
 import { navItems } from '../../data/nav'
 import { ButtonLink } from '../shared/Button'
@@ -12,6 +13,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { pathname } = useLocation()
+  const navigate = useNavigate()
   const isHome = pathname === '/'
   const transparent = isHome && !scrolled && !menuOpen
   const lenis = useLenis()
@@ -36,6 +38,18 @@ export function Header() {
     }
   }, [menuOpen, lenis])
 
+  // The logo goes home from anywhere and resets the scroll — a plain link would do nothing when
+  // the visitor is already on the homepage.
+  const handleLogoClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return
+
+    event.preventDefault()
+    setMenuOpen(false)
+    navigate('/')
+    lenis?.scrollTo(0, { immediate: true, force: true })
+    window.scrollTo(0, 0)
+  }
+
   const headerState = menuOpen
     ? 'border-transparent bg-black'
     : transparent
@@ -51,7 +65,7 @@ export function Header() {
       <AnnouncementBar />
 
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
-        <NavLink to="/" onClick={() => setMenuOpen(false)}>
+        <NavLink to="/" onClick={handleLogoClick}>
           <img src={logo} alt="Unity Auto Group" className="h-9 w-auto sm:h-11" />
         </NavLink>
 
