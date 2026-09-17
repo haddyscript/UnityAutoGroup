@@ -32,7 +32,7 @@ export function ServicesOverview() {
       </div>
 
       <Container className="pt-20 pb-32 sm:pb-40">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto max-w-3xl border-t border-gray-800">
           {services.map((service) => (
             <ServiceCard key={service.id} service={service} />
           ))}

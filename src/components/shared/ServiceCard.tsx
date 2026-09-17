@@ -1,29 +1,61 @@
+import { gsap } from 'gsap'
+import { useRef } from 'react'
+import { Link } from 'react-router-dom'
 import type { Service } from '../../data/services'
 
 interface ServiceCardProps {
   service: Service
 }
 
-export function ServiceCard({ service }: ServiceCardProps) {
-  return (
-    <div className="group relative h-80 overflow-hidden rounded-xl border border-gray-800">
-      {service.image && (
-        <img
-          src={service.image}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-        />
-      )}
-      <div className="absolute inset-0 bg-black/50 transition-colors duration-300 group-hover:bg-black/75" />
+const COLLAPSED_HEIGHT = 84
+const EXPANDED_HEIGHT = 420
 
-      <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-        <div className="translate-y-16 transition-transform duration-300 ease-out group-hover:translate-y-0">
-          <h3 className="text-lg font-semibold text-white">{service.title}</h3>
-          <p className="mt-2 text-sm text-gray-300 opacity-0 transition-opacity delay-100 duration-300 group-hover:opacity-100">
-            {service.description}
-          </p>
+export function ServiceCard({ service }: ServiceCardProps) {
+  const rowRef = useRef<HTMLAnchorElement>(null)
+  const popupRef = useRef<HTMLDivElement>(null)
+  const imageRef = useRef<HTMLImageElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+
+  const handleEnter = () => {
+    gsap.set(rowRef.current, { zIndex: 20 })
+    gsap.to(popupRef.current, { height: EXPANDED_HEIGHT, opacity: 1, duration: 0.5, ease: 'power3.out' })
+    gsap.to(imageRef.current, { scale: 1, duration: 0.6, ease: 'power3.out' })
+    gsap.to(titleRef.current, { scale: 1.08, duration: 0.4, ease: 'power3.out' })
+  }
+
+  const handleLeave = () => {
+    gsap.to(popupRef.current, {
+      height: 0,
+      opacity: 0,
+      duration: 0.4,
+      ease: 'power3.out',
+      onComplete: () => gsap.set(rowRef.current, { zIndex: 1 }),
+    })
+    gsap.to(imageRef.current, { scale: 1.08, duration: 0.4, ease: 'power3.out' })
+    gsap.to(titleRef.current, { scale: 1, duration: 0.3, ease: 'power3.out' })
+  }
+
+  return (
+    <Link
+      ref={rowRef}
+      to="/services"
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+      style={{ height: COLLAPSED_HEIGHT }}
+      className="relative z-[1] flex items-center justify-center border-b border-gray-800"
+    >
+      {service.image && (
+        <div
+          ref={popupRef}
+          className="absolute inset-x-0 top-1/2 h-0 -translate-y-1/2 overflow-hidden opacity-0 shadow-2xl shadow-black/60"
+        >
+          <img ref={imageRef} src={service.image} alt="" className="h-full w-full scale-110 object-cover" />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
-      </div>
-    </div>
+      )}
+      <h3 ref={titleRef} className="font-bebas relative z-10 text-3xl text-white uppercase sm:text-5xl">
+        {service.title}
+      </h3>
+    </Link>
   )
 }
