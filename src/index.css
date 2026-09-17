@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+/* Native-app feel on touch devices: the page never drifts sideways, there is no rubber-band
+   overscroll or pull-to-refresh, and taps do not flash the grey highlight box.
+   overflow-x uses clip rather than hidden so sticky positioning keeps working. */
+html,
+body {
+  overflow-x: clip;
+  overscroll-behavior: none;
+}
+
+body {
+  touch-action: pan-y pinch-zoom;
+  -webkit-tap-highlight-color: transparent;
+}
+
 ::selection {
   background-color: #22c55e;
   color: #000000;
