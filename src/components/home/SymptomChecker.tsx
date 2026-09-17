@@ -3,7 +3,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import {
   CircleAlert,
-  CircleHelp,
   Compass,
   Cpu,
   Disc3,
@@ -54,7 +53,7 @@ const urgencyTextClasses: Record<SymptomUrgency, string> = {
 
 export function SymptomChecker() {
   const sectionRef = useRef<HTMLElement>(null)
-  const pillRef = useRef<HTMLSpanElement>(null)
+  const eyebrowRef = useRef<HTMLParagraphElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const copyRef = useRef<HTMLParagraphElement>(null)
   const rowsRef = useRef<HTMLDivElement>(null)
@@ -85,7 +84,7 @@ export function SymptomChecker() {
             },
           })
 
-          tl.from(pillRef.current, { opacity: 0, y: 16, scale: 0.9, duration: 0.6 })
+          tl.from(eyebrowRef.current, { opacity: 0, y: 14, duration: 0.6 })
             .from(self.lines, { yPercent: 110, duration: 0.9, stagger: 0.12, ease: 'power4.out' }, '-=0.3')
             .from(copyRef.current, { opacity: 0, y: 20, duration: 0.7 }, '-=0.55')
             .from(
@@ -120,20 +119,16 @@ export function SymptomChecker() {
     <section ref={sectionRef} className="border-t border-gray-800 bg-black py-24 sm:py-32">
       <Container>
         <div className="text-center">
-          <span
-            ref={pillRef}
-            className="inline-flex items-center gap-2 rounded-full border border-green-500/40 bg-green-500/5 px-4 py-1.5 text-xs font-semibold tracking-widest text-green-500 uppercase"
-          >
-            <CircleHelp size={14} />
-            Driver Symptom Assistant
-          </span>
+          <p ref={eyebrowRef} className="text-sm font-semibold tracking-widest text-green-500 uppercase">
+            / Symptom Assistant /
+          </p>
           <h2
             ref={headingRef}
-            className="font-display mx-auto mt-6 max-w-3xl text-4xl leading-[1.2] font-bold tracking-tight text-white sm:text-5xl"
+            className="font-bebas mx-auto mt-4 max-w-4xl text-6xl leading-[1.05] text-white uppercase sm:text-8xl"
           >
             Hear a Strange Noise or See a Warning Light?
           </h2>
-          <p ref={copyRef} className="mx-auto mt-4 max-w-2xl text-gray-400">
+          <p ref={copyRef} className="font-garamond mx-auto mt-6 max-w-2xl text-lg text-gray-300 sm:text-xl">
             Select what you are noticing while driving. We match it to the likely cause and the diagnostic our
             technicians actually run — then you can request an upfront estimate.
           </p>
