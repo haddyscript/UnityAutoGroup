@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
-/* Native-app feel on touch devices: the page never drifts sideways, there is no rubber-band
-   overscroll or pull-to-refresh, and taps do not flash the grey highlight box.
+/* The page never drifts sideways and taps do not flash the grey highlight box, but vertical
+   scrolling keeps its natural rubber-band bounce so the site still reads as a website.
    overflow-x uses clip rather than hidden so sticky positioning keeps working. */
 html,
 body {
   overflow-x: clip;
-  overscroll-behavior: none;
+  overscroll-behavior-x: none;
 }
 
 body {
