@@ -10,7 +10,7 @@ export default function Services() {
     <>
       <section className="relative overflow-hidden py-16 text-center sm:py-20">
         <img src={serviceRepairBg} alt="" className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-black/80" />
+        <div className="absolute inset-0 bg-black/60" />
 
         <Container className="relative z-10">
           <p className="text-sm font-semibold tracking-widest text-green-500 uppercase">/ Services /</p>
