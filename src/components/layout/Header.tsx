@@ -25,15 +25,16 @@ export function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Only act while the menu is actually open — releasing the lock on mount would undo the one
+  // the preloader holds during startup.
   useEffect(() => {
-    if (menuOpen) {
-      lenis?.stop()
-      document.documentElement.style.overflow = 'hidden'
-    } else {
-      lenis?.start()
-      document.documentElement.style.overflow = ''
-    }
+    if (!menuOpen) return
+
+    lenis?.stop()
+    document.documentElement.style.overflow = 'hidden'
+
     return () => {
+      lenis?.start()
       document.documentElement.style.overflow = ''
     }
   }, [menuOpen, lenis])

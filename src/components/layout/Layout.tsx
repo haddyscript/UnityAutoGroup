@@ -3,6 +3,7 @@ import { Footer } from './Footer'
 import { Header } from './Header'
 import { PullToRefresh } from './PullToRefresh'
 import { ScrollToTop } from './ScrollToTop'
+import { SitePreloader } from './SitePreloader'
 import { StickyQuoteBar } from './StickyQuoteBar'
 
 export function Layout() {
@@ -11,6 +12,7 @@ export function Layout() {
 
   return (
     <div className="flex min-h-screen flex-col bg-black text-gray-100">
+      <SitePreloader />
       <ScrollToTop />
       <Header />
       <PullToRefresh>
