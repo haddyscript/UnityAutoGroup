@@ -15,47 +15,47 @@ export interface Service {
   image?: string
 }
 
-// Placeholder catalog — replace once Unity Auto Group confirms their actual service list.
+// Curated highlight of the full confirmed catalog (see data/serviceCatalog.ts) for the homepage grid.
 export const services: Service[] = [
   {
     id: 'battery-service',
-    title: 'Battery Service',
-    description: 'Testing, jump-starts, and battery replacement.',
+    title: 'Battery Diagnostics',
+    description: 'Diagnose battery concerns, from no-start issues to charging problems.',
     category: 'both',
     image: batteryServiceImage,
   },
   {
     id: 'brake-repair',
-    title: 'Brake Repair',
-    description: 'Brake pad, rotor, and full brake system service.',
+    title: 'Brake Pad & Rotor Service',
+    description: 'Front, rear, or both — Gold and Platinum level parts available.',
     category: 'both',
     image: brakeRepairImage,
   },
   {
     id: 'engine-diagnostics',
     title: 'Engine Diagnostics',
-    description: 'Check-engine-light diagnosis and troubleshooting.',
+    description: 'Computer scans and full engine concern diagnosis.',
     category: 'shop',
     image: engineDiagnosticsImage,
   },
   {
     id: 'cooling-system',
-    title: 'Cooling System',
-    description: 'Radiator, coolant, and overheating repairs.',
+    title: 'Cooling System Service',
+    description: 'Cooling system fluid flush and concern diagnostics.',
     category: 'both',
     image: coolingSystemImage,
   },
   {
     id: 'general-repair',
-    title: 'General Repair',
-    description: 'Everyday mechanical repairs and maintenance.',
+    title: 'Lube, Oil & Filter Service',
+    description: 'Blended, synthetic, or European synthetic oil options.',
     category: 'shop',
     image: generalRepairImage,
   },
   {
     id: 'mobile-tune-up',
-    title: 'Mobile Tune-Up',
-    description: 'On-site tune-ups wherever your vehicle is parked.',
+    title: 'Fluid & Maintenance Service',
+    description: 'Transmission, power steering, and A/C system flushes — wherever your vehicle is parked.',
     category: 'mobile',
     image: mobileTuneUpImage,
   },
