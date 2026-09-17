@@ -1,7 +1,7 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef } from 'react'
-import heroVideo from '../../assets/videos/hero-boomerang-video.mp4'
+import heroVideo from '../../assets/videos/home-hero-video.mp4'
 import { ButtonLink } from '../shared/Button'
 import { Marquee } from '../shared/Marquee'
 
