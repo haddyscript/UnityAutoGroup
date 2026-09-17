@@ -1,4 +1,5 @@
 import { Check } from 'lucide-react'
+import serviceRepairBg from '../assets/images/services/service-repair-bg.webp'
 import { Container } from '../components/shared/Container'
 import { Button } from '../components/shared/Button'
 import { serviceCatalog } from '../data/serviceCatalog'
@@ -7,8 +8,11 @@ import { openQuotePopup } from '../lib/quote'
 export default function Services() {
   return (
     <>
-      <section className="py-16 text-center sm:py-20">
-        <Container>
+      <section className="relative overflow-hidden py-16 text-center sm:py-20">
+        <img src={serviceRepairBg} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-black/80" />
+
+        <Container className="relative z-10">
           <p className="text-sm font-semibold tracking-widest text-green-500 uppercase">/ Services /</p>
           <h1 className="font-bebas mt-4 text-6xl text-white uppercase sm:text-7xl">Full Service Catalog</h1>
           <p className="mx-auto mt-4 max-w-2xl text-gray-400">
