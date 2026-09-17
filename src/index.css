@@ -1,17 +1,10 @@
 @import "tailwindcss";
 
-/* The page never drifts sideways and taps do not flash the grey highlight box, but vertical
-   scrolling keeps its natural rubber-band bounce so the site still reads as a website.
-   overflow-x uses clip rather than hidden so sticky positioning keeps working. */
+/* Keep the page from ever scrolling sideways. clip rather than hidden, so html/body do not
+   become scroll containers and break sticky positioning. */
 html,
 body {
   overflow-x: clip;
-  overscroll-behavior-x: none;
-}
-
-body {
-  touch-action: pan-y pinch-zoom;
-  -webkit-tap-highlight-color: transparent;
 }
 
 ::selection {
