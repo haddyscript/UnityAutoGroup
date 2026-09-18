@@ -91,8 +91,8 @@ export function Footer() {
               <Phone className="mt-0.5 shrink-0 text-green-500" size={18} />
               <p className="text-sm text-gray-400">
                 <span className="block font-semibold text-white">Central Dispatch & Customer Support:</span>
-                <a href="tel:+15555550100" className="text-green-500 hover:text-green-400">
-                  (555) 555-0100
+                <a href="tel:+17709985850" className="text-green-500 hover:text-green-400">
+                  (770) 998-5850
                 </a>
               </p>
             </div>
@@ -109,8 +109,8 @@ export function Footer() {
               <Mail className="mt-0.5 shrink-0 text-green-500" size={18} />
               <p className="text-sm text-gray-400">
                 <span className="block font-semibold text-white">Email Inquiries:</span>
-                <a href="mailto:info@example.com" className="hover:text-white">
-                  Email (TBD)
+                <a href="mailto:service@autorepairnearhere.com" className="hover:text-white">
+                  service@autorepairnearhere.com
                 </a>
               </p>
             </div>

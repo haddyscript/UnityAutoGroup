@@ -31,9 +31,9 @@ export function AnnouncementBar() {
             Rating (TBD)
           </span>
           <span className="h-3 w-px bg-gray-500" aria-hidden="true" />
-          <a href="tel:+15555550100" className="inline-flex items-center gap-1.5 hover:text-white">
+          <a href="tel:+17709985850" className="inline-flex items-center gap-1.5 hover:text-white">
             <Phone size={13} className="text-green-500" />
-            (555) 555-0100
+            (770) 998-5850
           </a>
         </div>
       </div>
