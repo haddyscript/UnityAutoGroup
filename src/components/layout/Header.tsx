@@ -1,5 +1,4 @@
 import { useLenis } from 'lenis/react'
-import { Menu, X } from 'lucide-react'
 import type { MouseEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
@@ -96,10 +95,25 @@ export function Header() {
           <button
             type="button"
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            className="text-gray-200 hover:text-white lg:hidden"
+            aria-expanded={menuOpen}
+            className="relative flex h-6 w-7 flex-col items-center justify-center gap-[5px] text-gray-200 hover:text-white lg:hidden"
             onClick={() => setMenuOpen((open) => !open)}
           >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            <span
+              className={`h-0.5 w-7 rounded-full bg-current transition-transform duration-300 ease-out ${
+                menuOpen ? 'translate-y-[7px] rotate-45' : ''
+              }`}
+            />
+            <span
+              className={`h-0.5 w-7 rounded-full bg-current transition-opacity duration-200 ease-out ${
+                menuOpen ? 'opacity-0' : 'opacity-100'
+              }`}
+            />
+            <span
+              className={`h-0.5 w-7 rounded-full bg-current transition-transform duration-300 ease-out ${
+                menuOpen ? '-translate-y-[7px] -rotate-45' : ''
+              }`}
+            />
           </button>
         </div>
       </div>
