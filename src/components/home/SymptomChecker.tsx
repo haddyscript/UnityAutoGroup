@@ -62,6 +62,44 @@ export function SymptomChecker() {
 
   const [selectedId, setSelectedId] = useState(symptoms[0].id)
   const selected = symptoms.find((symptom) => symptom.id === selectedId) ?? symptoms[0]
+  const isFirstSelection = useRef(true)
+
+  const handleSelect = (id: string) => {
+    setSelectedId(id)
+
+    // Below the lg breakpoint the panel sits after the full symptom list, out of view — bring it
+    // to the selecting tap instead of leaving the visitor to hunt for it by scrolling.
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
+  useEffect(() => {
+    // Skip the mount-time run — the entrance timeline already introduces the panel once.
+    if (isFirstSelection.current) {
+      isFirstSelection.current = false
+      return
+    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    // Small "updated" cue on every selection change: replay the light sweep and flash the border.
+    gsap.fromTo(
+      panelRef.current,
+      { boxShadow: '0 0 0 0 rgba(34,197,94,0)' },
+      { boxShadow: '0 0 0 3px rgba(34,197,94,0.35)', duration: 0.3, yoyo: true, repeat: 1, ease: 'power2.out' },
+    )
+    gsap.fromTo(
+      shimmerRef.current,
+      { xPercent: 0, opacity: 0 },
+      {
+        xPercent: 400,
+        opacity: 1,
+        duration: 0.7,
+        ease: 'power1.inOut',
+        onComplete: () => gsap.to(shimmerRef.current, { opacity: 0, duration: 0.3 }),
+      },
+    )
+  }, [selectedId])
 
   useEffect(() => {
     // Entrance choreography: pill → masked heading lines → copy → symptom rows sliding in from the
@@ -135,7 +173,7 @@ export function SymptomChecker() {
         </div>
 
         <div className="mt-14 grid gap-6 lg:grid-cols-[1.05fr_1fr] lg:items-start">
-          <div ref={rowsRef} className="space-y-3">
+          <div ref={rowsRef} className="space-y-2 sm:space-y-3">
             {symptoms.map((symptom) => {
               const Icon = iconMap[symptom.icon]
               const isSelected = symptom.id === selected.id
@@ -144,9 +182,9 @@ export function SymptomChecker() {
                 <div key={symptom.id}>
                   <button
                     type="button"
-                    onClick={() => setSelectedId(symptom.id)}
+                    onClick={() => handleSelect(symptom.id)}
                     aria-pressed={isSelected}
-                    className={`group relative flex w-full cursor-pointer items-center gap-4 overflow-hidden rounded-xl border p-4 text-left transition duration-300 ease-out ${
+                    className={`group relative flex w-full cursor-pointer items-center gap-3 overflow-hidden rounded-xl border p-3.5 text-left transition duration-300 ease-out sm:gap-4 sm:p-4 ${
                       isSelected
                         ? 'border-green-500/70 bg-green-500/[0.07]'
                         : 'border-white/5 bg-gray-950 hover:-translate-y-0.5 hover:border-green-500/40 hover:bg-white/[0.04] hover:shadow-lg hover:shadow-green-500/10'
@@ -159,20 +197,23 @@ export function SymptomChecker() {
                       }`}
                     />
                     <span
-                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-green-500 transition-colors duration-300 ${
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-green-500 transition-colors duration-300 sm:h-11 sm:w-11 ${
                         isSelected ? 'bg-green-500/15' : 'bg-white/5 group-hover:bg-green-500/10'
                       }`}
                     >
-                      <Icon size={20} />
+                      <Icon size={18} className="sm:hidden" />
+                      <Icon size={20} className="hidden sm:block" />
                     </span>
                     <span className="min-w-0 flex-1 transition-transform duration-300 ease-out group-hover:translate-x-1">
-                      <span className="block text-xs font-semibold tracking-wide text-green-500 uppercase">
+                      <span className="block text-[11px] font-semibold tracking-wide text-green-500 uppercase sm:text-xs">
                         {symptom.category}
                       </span>
-                      <span className="mt-1 block font-semibold text-white">{symptom.label}</span>
+                      <span className="mt-0.5 block text-sm leading-snug font-semibold text-white sm:mt-1 sm:text-base">
+                        {symptom.label}
+                      </span>
                     </span>
                     <span
-                      className={`shrink-0 rounded-md px-2.5 py-1 text-xs font-semibold ring-1 transition-colors duration-300 ${urgencyBadgeClasses[symptom.urgency]}`}
+                      className={`shrink-0 rounded-md px-2 py-1 text-[11px] font-semibold ring-1 transition-colors duration-300 sm:px-2.5 sm:text-xs ${urgencyBadgeClasses[symptom.urgency]}`}
                     >
                       {urgencyLabels[symptom.urgency]}
                     </span>
@@ -184,7 +225,7 @@ export function SymptomChecker() {
 
           <div
             ref={panelRef}
-            className="relative overflow-hidden rounded-2xl border border-white/10 bg-gray-950 p-6 shadow-2xl shadow-black/60 sm:p-8 lg:sticky lg:top-24"
+            className="relative scroll-mt-28 overflow-hidden rounded-2xl border border-white/10 bg-gray-950 p-6 shadow-2xl shadow-black/60 sm:p-8 lg:sticky lg:top-24"
           >
             <div
               ref={shimmerRef}
