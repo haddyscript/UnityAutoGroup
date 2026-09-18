@@ -1,5 +1,5 @@
 import { gsap } from 'gsap'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Service } from '../../data/services'
 
@@ -15,22 +15,22 @@ export function ServiceCard({ service }: ServiceCardProps) {
   const popupRef = useRef<HTMLDivElement>(null)
   const imageRef = useRef<HTMLImageElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
+  // Tracks stacking directly off hover state so it can never get left behind by an
+  // animation `onComplete` that gets skipped when a later tween overwrites it.
+  const [isActive, setIsActive] = useState(false)
 
   const handleEnter = () => {
-    gsap.set(rowRef.current, { zIndex: 20 })
+    setIsActive(true)
+    gsap.killTweensOf([popupRef.current, imageRef.current, titleRef.current])
     gsap.to(popupRef.current, { height: EXPANDED_HEIGHT, opacity: 1, duration: 0.5, ease: 'power3.out' })
     gsap.to(imageRef.current, { scale: 1, duration: 0.6, ease: 'power3.out' })
     gsap.to(titleRef.current, { scale: 1.08, duration: 0.4, ease: 'power3.out' })
   }
 
   const handleLeave = () => {
-    gsap.to(popupRef.current, {
-      height: 0,
-      opacity: 0,
-      duration: 0.4,
-      ease: 'power3.out',
-      onComplete: () => gsap.set(rowRef.current, { zIndex: 1 }),
-    })
+    setIsActive(false)
+    gsap.killTweensOf([popupRef.current, imageRef.current, titleRef.current])
+    gsap.to(popupRef.current, { height: 0, opacity: 0, duration: 0.4, ease: 'power3.out' })
     gsap.to(imageRef.current, { scale: 1.08, duration: 0.4, ease: 'power3.out' })
     gsap.to(titleRef.current, { scale: 1, duration: 0.3, ease: 'power3.out' })
   }
@@ -39,10 +39,11 @@ export function ServiceCard({ service }: ServiceCardProps) {
     <Link
       ref={rowRef}
       to="/services"
+      data-reveal-list
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
-      style={{ height: COLLAPSED_HEIGHT }}
-      className="relative z-[1] flex items-center justify-center border-b border-gray-800"
+      style={{ height: COLLAPSED_HEIGHT, zIndex: isActive ? 20 : 1 }}
+      className="relative flex items-center justify-center border-b border-gray-800"
     >
       {service.image && (
         <div
