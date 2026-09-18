@@ -101,7 +101,16 @@ export function Footer() {
               <MapPin className="mt-0.5 shrink-0 text-green-500" size={18} />
               <p className="text-sm text-gray-400">
                 <span className="block font-semibold text-white">Main Headquarters & Hub:</span>
-                Address (TBD)
+                <a
+                  href="https://maps.google.com/?q=2755+Stone+Mountain+Lithonia+Road+Unit+B,+Lithonia,+GA+30058"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white"
+                >
+                  2755 Stone Mountain Lithonia Road, Unit B
+                  <br />
+                  Lithonia, GA 30058
+                </a>
               </p>
             </div>
 
