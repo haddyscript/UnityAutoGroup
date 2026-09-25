@@ -1,7 +1,8 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Calculator, CalendarCheck2, Car, Send } from 'lucide-react'
+import { Calculator, CalendarCheck2, Send } from 'lucide-react'
 import { useEffect, useRef } from 'react'
+import carCardsImage from '../../assets/images/car-cards.png'
 import { Container } from '../shared/Container'
 import { SectionHeading } from '../shared/SectionHeading'
 
@@ -10,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger)
 const steps = [
   {
     step: '01',
-    icon: Car,
+    image: carCardsImage,
     title: 'Tell Us About Your Vehicle',
     description: 'Enter your vehicle details and the repair or service you need.',
   },
@@ -84,14 +85,27 @@ export function HowItWorks() {
           />
 
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {steps.map(({ step, icon: Icon, title, description }) => (
+            {steps.map(({ step, icon: Icon, image, title, description }) => (
               <div key={step} data-reveal className="group relative">
                 <div className="relative z-10 flex size-12 items-center justify-center rounded-full border border-green-500/30 bg-black text-sm font-bold text-green-500 transition-all duration-300 group-hover:border-green-500 group-hover:bg-green-500 group-hover:text-black group-hover:shadow-[0_0_24px_rgba(34,197,94,0.5)]">
                   {step}
                 </div>
 
                 <div className="mt-6 h-full rounded-xl border border-gray-800 bg-gray-950 p-6 transition-all duration-300 group-hover:-translate-y-1 group-hover:border-green-500/40 group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_40px_rgba(34,197,94,0.15)]">
-                  <Icon className="size-6 text-green-500/70 transition-colors duration-300 group-hover:text-green-500" strokeWidth={1.75} />
+                  {image ? (
+                    <img
+                      src={image}
+                      alt=""
+                      className="h-9 w-auto origin-left object-contain transition-transform duration-300 group-hover:scale-110"
+                    />
+                  ) : (
+                    Icon && (
+                      <Icon
+                        className="size-6 text-green-500/70 transition-colors duration-300 group-hover:text-green-500"
+                        strokeWidth={1.75}
+                      />
+                    )
+                  )}
                   <h3 className="mt-4 text-lg font-semibold text-white">{title}</h3>
                   <p className="mt-2 text-sm text-gray-400">{description}</p>
                 </div>
