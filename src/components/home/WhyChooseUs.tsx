@@ -45,7 +45,7 @@ export function WhyChooseUs() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden border-t border-gray-800 bg-gray-950 pt-32 pb-20 sm:pt-40">
+    <section ref={sectionRef} className="relative overflow-hidden border-t border-gray-800 bg-gray-950 pt-32 pb-32 sm:pt-40 sm:pb-40">
       <video
         className="absolute inset-0 h-full w-full object-cover"
         src={repairSimplifiedVideo}
