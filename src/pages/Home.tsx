@@ -1,4 +1,3 @@
-import { AboutSection } from '../components/home/AboutSection'
 import { FAQSection } from '../components/home/FAQSection'
 import { FinalCTA } from '../components/home/FinalCTA'
 import { Hero } from '../components/home/Hero'
@@ -18,7 +17,6 @@ export default function Home() {
       <SymptomChecker />
       <WhyChooseUs />
       <HowItWorks />
-      <AboutSection />
       <TestimonialsSection />
       <FAQSection />
       <FinalCTA />
