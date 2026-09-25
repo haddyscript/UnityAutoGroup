@@ -40,72 +40,47 @@ export function HowItWorks() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 75%',
-          // Rewind once the section is scrolled back past, so returning to it replays the entrance every time.
-          toggleActions: 'restart none none reset',
-        },
+      const scrollTrigger = {
+        trigger: sectionRef.current,
+        start: 'top 75%',
+        // Rewind once the section is scrolled back past, so returning to it replays the entrance every time.
+        toggleActions: 'restart none none reset',
+      }
+
+      gsap.from('[data-reveal]', {
+        opacity: 0,
+        y: 40,
+        scale: 0.95,
+        filter: 'blur(8px)',
+        duration: 0.9,
+        ease: 'power3.out',
+        stagger: 0.15,
+        clearProps: 'transform,filter',
+        scrollTrigger,
       })
 
-      tl.from('[data-heading]', {
+      gsap.from('[data-badge]', {
         opacity: 0,
-        y: 30,
-        duration: 0.8,
-        ease: 'power3.out',
+        scale: 0,
+        duration: 0.6,
+        delay: 0.2,
+        ease: 'back.out(2.6)',
+        stagger: 0.15,
+        clearProps: 'transform',
+        scrollTrigger,
       })
-        .fromTo(
-          '[data-line]',
-          { scaleX: 0 },
-          { scaleX: 1, duration: 1, ease: 'power3.inOut' },
-          '-=0.35',
-        )
-        .fromTo(
-          '[data-line-dot]',
-          { left: '0%', opacity: 1 },
-          { left: '100%', opacity: 0, duration: 1, ease: 'power2.inOut' },
-          '<',
-        )
-        .from(
-          '[data-badge]',
-          {
-            opacity: 0,
-            scale: 0.4,
-            duration: 0.6,
-            ease: 'back.out(2.4)',
-            stagger: 0.15,
-            clearProps: 'transform',
-          },
-          '-=0.75',
-        )
-        .from(
-          '[data-card]',
-          {
-            opacity: 0,
-            y: 36,
-            scale: 0.96,
-            filter: 'blur(8px)',
-            duration: 0.8,
-            ease: 'power3.out',
-            stagger: 0.15,
-            clearProps: 'transform,filter',
-          },
-          '-=0.55',
-        )
-        .from(
-          '[data-icon]',
-          {
-            opacity: 0,
-            scale: 0.5,
-            rotate: -8,
-            duration: 0.5,
-            ease: 'back.out(2.2)',
-            stagger: 0.15,
-            clearProps: 'transform',
-          },
-          '-=0.6',
-        )
+
+      gsap.fromTo(
+        '[data-line]',
+        { scaleX: 0 },
+        { scaleX: 1, duration: 1, ease: 'power3.inOut', scrollTrigger },
+      )
+
+      gsap.fromTo(
+        '[data-line-dot]',
+        { left: '0%', opacity: 1 },
+        { left: '100%', opacity: 0, duration: 1, ease: 'power2.inOut', scrollTrigger },
+      )
     }, sectionRef)
 
     return () => ctx.revert()
@@ -114,7 +89,7 @@ export function HowItWorks() {
   return (
     <section ref={sectionRef} className="py-20">
       <Container>
-        <div data-heading>
+        <div data-reveal>
           <SectionHeading eyebrow="How It Works" title="From Estimate to Repair" />
         </div>
 
@@ -130,7 +105,7 @@ export function HowItWorks() {
 
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {steps.map(({ step, icon: Icon, image, title, description }) => (
-              <div key={step} className="group relative">
+              <div key={step} data-reveal className="group relative">
                 <div
                   data-badge
                   className="relative z-10 flex size-12 items-center justify-center rounded-full border border-green-500/30 bg-black text-sm font-bold text-green-500 transition-all duration-300 group-hover:border-green-500 group-hover:bg-green-500 group-hover:text-black group-hover:shadow-[0_0_24px_rgba(34,197,94,0.5)]"
@@ -138,26 +113,23 @@ export function HowItWorks() {
                   {step}
                 </div>
 
-                <div
-                  data-card
-                  className="mt-6 h-full rounded-xl border border-gray-800 bg-gray-950 p-6 transition-all duration-300 group-hover:-translate-y-1 group-hover:border-green-500/40 group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_40px_rgba(34,197,94,0.15)]"
-                >
-                  <div data-icon>
-                    {image ? (
-                      <img
-                        src={image}
-                        alt=""
-                        className="h-9 w-auto origin-left object-contain transition-transform duration-300 group-hover:scale-110"
+                <div className="mt-6 h-full rounded-xl border border-gray-800 bg-gray-950 p-6 transition-all duration-300 group-hover:-translate-y-1 group-hover:border-green-500/40 group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_40px_rgba(34,197,94,0.15)]">
+                  {image ? (
+                    <img
+                      src={image}
+                      alt=""
+                      width={115}
+                      height={36}
+                      className="h-9 w-auto origin-left object-contain transition-transform duration-300 group-hover:scale-110"
+                    />
+                  ) : (
+                    Icon && (
+                      <Icon
+                        className="size-6 text-green-500/70 transition-colors duration-300 group-hover:text-green-500"
+                        strokeWidth={1.75}
                       />
-                    ) : (
-                      Icon && (
-                        <Icon
-                          className="size-6 text-green-500/70 transition-colors duration-300 group-hover:text-green-500"
-                          strokeWidth={1.75}
-                        />
-                      )
-                    )}
-                  </div>
+                    )
+                  )}
                   <h3 className="mt-4 text-lg font-semibold text-white">{title}</h3>
                   <p className="mt-2 text-sm text-gray-400">{description}</p>
                 </div>
