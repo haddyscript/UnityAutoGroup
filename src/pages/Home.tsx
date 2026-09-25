@@ -5,7 +5,6 @@ import { HowItWorks } from '../components/home/HowItWorks'
 import { QuoteEntry } from '../components/home/QuoteEntry'
 import { ServicesOverview } from '../components/home/ServicesOverview'
 import { SymptomChecker } from '../components/home/SymptomChecker'
-import { TestimonialsSection } from '../components/home/TestimonialsSection'
 import { WhyChooseUs } from '../components/home/WhyChooseUs'
 
 export default function Home() {
@@ -17,7 +16,6 @@ export default function Home() {
       <SymptomChecker />
       <WhyChooseUs />
       <HowItWorks />
-      <TestimonialsSection />
       <FAQSection />
       <FinalCTA />
     </>
