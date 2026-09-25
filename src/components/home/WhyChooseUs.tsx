@@ -54,7 +54,7 @@ export function WhyChooseUs() {
         loop
         playsInline
       />
-      <div className="absolute inset-0 bg-gray-950/85" />
+      <div className="absolute inset-0 bg-gray-950/55" />
 
       <Container className="relative z-10">
         <div data-reveal className="text-center">
