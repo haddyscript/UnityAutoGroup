@@ -51,9 +51,9 @@ export function Hero() {
           textClassName="font-mono text-xs tracking-[0.3em] text-green-500 uppercase"
         />
         <h1 className="mt-4 font-serif text-4xl text-white italic sm:text-5xl">
-          Be moved —
+          We Come To You —
           <br />
-          Shop or Mobile Repair
+          Or You Come To Us
         </h1>
         <p className="mt-6 font-mono text-xs leading-relaxed tracking-wide text-gray-300 uppercase sm:text-sm">
           Tell us about your vehicle and the repair you need, and get an estimated quote before you book —
