@@ -1,19 +1,27 @@
-import { ButtonLink } from '../shared/Button'
 import { Container } from '../shared/Container'
+import { openQuotePopup } from '../../lib/quote'
 
 export function FinalCTA() {
   return (
-    <section className="border-t border-gray-800 bg-gray-950 py-20">
+    <section className="bg-green-500 py-20">
       <Container className="text-center">
-        <h2 className="text-3xl font-bold text-white">Ready to Get Your Vehicle Repaired?</h2>
-        <p className="mx-auto mt-4 max-w-xl text-gray-400">
-          Get an estimated quote and choose Shop or Mobile Service today.
+        <h2 className="text-3xl font-extrabold text-black uppercase">Ready to Get Your Vehicle Repaired?</h2>
+        <p className="mx-auto mt-4 max-w-xl text-black/70">
+          Get an estimated quote, then choose Shop or Mobile Service.
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <ButtonLink to="/shop-service">Shop Service</ButtonLink>
-          <ButtonLink to="/mobile-service" variant="secondary">
-            Mobile Service
-          </ButtonLink>
+          <button
+            onClick={openQuotePopup}
+            className="rounded-full bg-black px-6 py-2.5 text-xs font-semibold tracking-wide text-white uppercase transition-colors hover:bg-black/80"
+          >
+            Get Instant Quote
+          </button>
+          <a
+            href="tel:+17709985850"
+            className="rounded-full px-6 py-2.5 text-xs font-semibold tracking-wide text-black uppercase ring-1 ring-black/60 transition-colors hover:bg-black/10"
+          >
+            Call (770) 998-5850
+          </a>
         </div>
       </Container>
     </section>
