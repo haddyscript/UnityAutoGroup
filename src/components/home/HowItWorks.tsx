@@ -87,7 +87,7 @@ export function HowItWorks() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-20">
+    <section ref={sectionRef} className="pt-32 pb-20 sm:pt-40">
       <Container>
         <div data-reveal>
           <SectionHeading eyebrow="How It Works" title="From Estimate to Repair" />
