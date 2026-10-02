@@ -7,11 +7,12 @@ import heroVideo from '../../assets/videos/home-hero-video.mp4'
 import happyFacesVideo2 from '../../assets/videos/happy-face-mechanics-02.mp4'
 import happyFacesVideo from '../../assets/videos/happy-faces-mechanics.mp4'
 import mechanicVideo from '../../assets/videos/mechanic-repairing.mp4'
-import { Phone } from 'lucide-react'
+import { Phone, Volume2, VolumeX } from 'lucide-react'
 import { business } from '../../data/business'
 import { usePreloaderRevealed } from '../../lib/preloader'
 import { ButtonAnchor, ButtonLink } from '../shared/Button'
 import { Marquee } from '../shared/Marquee'
+import { useHeroNarration } from './useHeroNarration'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -36,6 +37,12 @@ export function Hero() {
   const endedClips = useRef(new Set<number>())
   const [activeSlide, setActiveSlide] = useState(0)
   const revealed = usePreloaderRevealed()
+  // Bumped to replay the sequence from the first slide even when that slide is already showing.
+  const [cycle, setCycle] = useState(0)
+  const narration = useHeroNarration(sectionRef, () => {
+    setActiveSlide(0)
+    setCycle((count) => count + 1)
+  })
   // Later clips wait to download until the first one is playing, so they never slow the first paint.
   const [preloadRest, setPreloadRest] = useState(false)
   const fadeRef = useRef<HTMLDivElement>(null)
@@ -84,7 +91,7 @@ export function Hero() {
       window.clearTimeout(advance)
       window.clearTimeout(pauseHidden)
     }
-  }, [activeSlide, revealed])
+  }, [activeSlide, revealed, cycle])
 
   const handleClipEnded = (slideIndex: number, clipIndex: number) => {
     if (!revealed || slideIndex !== activeSlide) return
@@ -126,7 +133,24 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
       <div ref={fadeRef} className="absolute inset-0 bg-black opacity-0" />
 
+      {narration.caption && (
+        <p
+          aria-hidden="true"
+          className="absolute inset-x-4 top-32 z-10 font-serif text-2xl text-white italic drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] sm:inset-x-8 sm:text-3xl lg:top-auto lg:right-auto lg:bottom-24 lg:max-w-lg"
+        >
+          {narration.caption}
+        </p>
+      )}
+
       <div ref={contentRef} className="relative z-10 ml-auto w-full max-w-xl px-4 pt-40 pb-16 sm:px-8 sm:pb-24">
+        <button
+          type="button"
+          onClick={narration.toggle}
+          className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-[11px] font-semibold tracking-wide text-white uppercase ring-1 ring-white/20 backdrop-blur transition-colors hover:bg-white/20"
+        >
+          {narration.playing ? <VolumeX size={14} /> : <Volume2 size={14} />}
+          {narration.playing ? 'Stop intro' : 'Play intro with sound'}
+        </button>
         <Marquee
           text="Unity Auto Group"
           className="w-56 sm:w-64"
