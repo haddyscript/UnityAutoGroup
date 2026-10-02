@@ -7,7 +7,9 @@ import heroVideo from '../../assets/videos/home-hero-video.mp4'
 import happyFacesVideo2 from '../../assets/videos/happy-face-mechanics-02.mp4'
 import happyFacesVideo from '../../assets/videos/happy-faces-mechanics.mp4'
 import mechanicVideo from '../../assets/videos/mechanic-repairing.mp4'
-import { ButtonLink } from '../shared/Button'
+import { Phone } from 'lucide-react'
+import { business } from '../../data/business'
+import { ButtonAnchor, ButtonLink } from '../shared/Button'
 import { Marquee } from '../shared/Marquee'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -114,11 +116,15 @@ export function Hero() {
           Tell us about your vehicle and the repair you need, and get an estimated quote before you book —
           whether you bring it to our shop or we come to you.
         </p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
           <ButtonLink to="/shop-service">Shop Service</ButtonLink>
           <ButtonLink to="/mobile-service" variant="secondary">
             Mobile Service
           </ButtonLink>
+          <ButtonAnchor href={business.phoneHref} variant="secondary" aria-label={`Call us at ${business.phone}`}>
+            <Phone size={14} />
+            Call {business.phone}
+          </ButtonAnchor>
         </div>
       </div>
     </section>

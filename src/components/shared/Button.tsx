@@ -61,3 +61,16 @@ export function ButtonLink({ variant = 'primary', className = '', children, ...p
     </Link>
   )
 }
+
+interface ButtonAnchorProps extends ComponentPropsWithoutRef<'a'> {
+  variant?: ButtonVariant
+}
+
+// For plain links such as tel: and external URLs, which the router's Link does not handle.
+export function ButtonAnchor({ variant = 'primary', className = '', children, ...props }: ButtonAnchorProps) {
+  return (
+    <a className={`${baseClasses} ${variantClasses[variant]} ${className}`} {...props}>
+      <ButtonContent variant={variant}>{children}</ButtonContent>
+    </a>
+  )
+}
