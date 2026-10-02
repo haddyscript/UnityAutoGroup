@@ -4,7 +4,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../../assets/unity-auto-group-logo.webp'
 import { navItems } from '../../data/nav'
-import { ButtonLink } from '../shared/Button'
+import { openQuotePopup } from '../../lib/quote'
+import { Button } from '../shared/Button'
 import { AnnouncementBar } from './AnnouncementBar'
 import { MobileNav } from './MobileNav'
 
@@ -128,9 +129,9 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <ButtonLink to="/" className="hidden lg:inline-flex">
+          <Button onClick={openQuotePopup} className="hidden lg:inline-flex">
             Get a Quote
-          </ButtonLink>
+          </Button>
           <button
             type="button"
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}

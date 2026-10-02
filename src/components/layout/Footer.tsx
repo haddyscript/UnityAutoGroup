@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom'
 import { navItems } from '../../data/nav'
 import { services } from '../../data/services'
 import { Container } from '../shared/Container'
-import { ButtonLink } from '../shared/Button'
+import { openQuotePopup } from '../../lib/quote'
+import { Button } from '../shared/Button'
 import logo from '../../assets/unity-auto-group-logo.webp'
 
 // Placeholder contact info, hours, and certifications — replace once Unity Auto Group confirms real details.
@@ -116,9 +117,9 @@ export function Footer() {
             </div>
           </div>
 
-          <ButtonLink to="/" className="mt-6 w-full">
+          <Button onClick={openQuotePopup} className="mt-6 w-full">
             Get a Free Estimate
-          </ButtonLink>
+          </Button>
         </div>
       </Container>
 

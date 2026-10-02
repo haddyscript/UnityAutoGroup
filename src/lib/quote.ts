@@ -7,13 +7,17 @@ const POPUP_HEIGHT = 800
 export function openQuotePopup() {
   const left = window.screenX + (window.outerWidth - POPUP_WIDTH) / 2
   const top = window.screenY + (window.outerHeight - POPUP_HEIGHT) / 2
+  // No noopener in the features: with it, window.open always returns null, so the fallback below
+  // would open a second tab on every click. The opener link is cut by hand instead.
   const popup = window.open(
     QUOTE_URL,
     'unity-auto-group-quote',
-    `width=${POPUP_WIDTH},height=${POPUP_HEIGHT},left=${left},top=${top},noopener,noreferrer`,
+    `width=${POPUP_WIDTH},height=${POPUP_HEIGHT},left=${left},top=${top}`,
   )
 
-  if (!popup) {
+  if (popup) {
+    popup.opener = null
+  } else {
     window.open(QUOTE_URL, '_blank', 'noopener,noreferrer')
   }
 }

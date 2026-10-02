@@ -3,7 +3,8 @@ import { ArrowUpRight, Phone } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { navItems } from '../../data/nav'
-import { ButtonLink } from '../shared/Button'
+import { openQuotePopup } from '../../lib/quote'
+import { Button } from '../shared/Button'
 
 interface MobileNavProps {
   open: boolean
@@ -89,9 +90,15 @@ export function MobileNav({ open, onNavigate }: MobileNavProps) {
         className="relative border-t border-white/10 px-6 py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]"
       >
         <div className="flex flex-col gap-3">
-          <ButtonLink to="/" onClick={onNavigate} className="w-full">
+          <Button
+            onClick={() => {
+              onNavigate()
+              openQuotePopup()
+            }}
+            className="w-full"
+          >
             Get a Quote
-          </ButtonLink>
+          </Button>
           <a
             href="tel:+17709985850"
             onClick={onNavigate}
