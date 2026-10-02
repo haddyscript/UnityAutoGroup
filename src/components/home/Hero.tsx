@@ -1,6 +1,8 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef, useState } from 'react'
+import blackAndWhiteSmilingVideo from '../../assets/videos/black-and-white-men-smiling.mp4'
+import manWorkingVideo from '../../assets/videos/black-man-working-on.mp4'
 import heroVideo from '../../assets/videos/home-hero-video.mp4'
 import happyFacesVideo2 from '../../assets/videos/happy-face-mechanics-02.mp4'
 import happyFacesVideo from '../../assets/videos/happy-faces-mechanics.mp4'
@@ -10,14 +12,22 @@ import { Marquee } from '../shared/Marquee'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// Played in order, then back to the first, crossfading between clips.
-const heroVideos = [heroVideo, mechanicVideo, happyFacesVideo, happyFacesVideo2]
+// Slides play in order, then back to the first, crossfading between them. A slide with two clips plays
+// them side by side (first on the left) and moves on once both have finished.
+const heroSlides = [
+  [heroVideo],
+  [mechanicVideo],
+  [happyFacesVideo],
+  [happyFacesVideo2],
+  [blackAndWhiteSmilingVideo, manWorkingVideo],
+]
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
   const videoRef = useRef<HTMLDivElement>(null)
-  const clipRefs = useRef<(HTMLVideoElement | null)[]>([])
-  const [activeClip, setActiveClip] = useState(0)
+  const clipRefs = useRef<(HTMLVideoElement | null)[][]>(heroSlides.map(() => []))
+  const endedClips = useRef(new Set<number>())
+  const [activeSlide, setActiveSlide] = useState(0)
   // Later clips wait to download until the first one is playing, so they never slow the first paint.
   const [preloadRest, setPreloadRest] = useState(false)
   const fadeRef = useRef<HTMLDivElement>(null)
@@ -41,32 +51,49 @@ export function Hero() {
   }, [])
 
   useEffect(() => {
-    const clip = clipRefs.current[activeClip]
-    if (!clip) return
-    clip.currentTime = 0
-    clip.play().catch(() => {})
-  }, [activeClip])
+    endedClips.current.clear()
+    for (const clip of clipRefs.current[activeSlide]) {
+      if (!clip) continue
+      clip.currentTime = 0
+      clip.play().catch(() => {})
+    }
+  }, [activeSlide])
+
+  const handleClipEnded = (slideIndex: number, clipIndex: number) => {
+    if (slideIndex !== activeSlide) return
+    endedClips.current.add(clipIndex)
+    if (endedClips.current.size === heroSlides[slideIndex].length) {
+      setActiveSlide((slideIndex + 1) % heroSlides.length)
+    }
+  }
 
   return (
     <section ref={sectionRef} className="theme-dark relative flex min-h-screen items-end overflow-hidden bg-black">
       <div ref={videoRef} className="absolute inset-0">
-        {heroVideos.map((src, index) => (
-          <video
-            key={src}
-            ref={(el) => {
-              clipRefs.current[index] = el
-            }}
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
-              index === activeClip ? 'opacity-100' : 'opacity-0'
-            }`}
-            src={src}
-            autoPlay={index === 0}
-            preload={index === 0 || preloadRest ? 'auto' : 'none'}
-            muted
-            playsInline
-            onPlaying={index === 0 ? () => setPreloadRest(true) : undefined}
-            onEnded={() => setActiveClip((index + 1) % heroVideos.length)}
-          />
+        {heroSlides.map((clips, slideIndex) => (
+          <div
+            key={slideIndex}
+            className={`absolute inset-0 grid grid-rows-1 gap-px transition-opacity duration-1000 ${
+              clips.length > 1 ? 'grid-cols-2' : ''
+            } ${slideIndex === activeSlide ? 'opacity-100' : 'opacity-0'}`}
+          >
+            {clips.map((src, clipIndex) => (
+              <video
+                key={src}
+                ref={(el) => {
+                  clipRefs.current[slideIndex][clipIndex] = el
+                }}
+                className="h-full min-h-0 w-full min-w-0 object-cover"
+                src={src}
+                autoPlay={slideIndex === 0}
+                preload={slideIndex === 0 || preloadRest ? 'auto' : 'none'}
+                muted
+                playsInline
+                onPlaying={slideIndex === 0 ? () => setPreloadRest(true) : undefined}
+                onEnded={() => handleClipEnded(slideIndex, clipIndex)}
+              />
+            ))}
+          </div>
         ))}
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
