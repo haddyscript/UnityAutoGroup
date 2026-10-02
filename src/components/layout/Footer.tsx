@@ -116,7 +116,7 @@ export function Footer() {
             </div>
           </div>
 
-          <ButtonLink to="/contact" className="mt-6 w-full">
+          <ButtonLink to="/" className="mt-6 w-full">
             Get a Free Estimate
           </ButtonLink>
         </div>

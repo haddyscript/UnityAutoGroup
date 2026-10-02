@@ -8,6 +8,4 @@ export const navItems: NavItem[] = [
   { label: 'Services', path: '/services' },
   { label: 'Shop Service', path: '/shop-service' },
   { label: 'Mobile Service', path: '/mobile-service' },
-  { label: 'About', path: '/about' },
-  { label: 'Contact', path: '/contact' },
 ]
