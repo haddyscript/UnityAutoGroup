@@ -1,6 +1,6 @@
 import { useLenis } from 'lenis/react'
 import type { MouseEvent } from 'react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../../assets/unity-auto-group-logo.webp'
 import { navItems } from '../../data/nav'
@@ -16,6 +16,8 @@ export function Header() {
   const isHome = pathname === '/'
   const transparent = isHome && !scrolled && !menuOpen
   const lenis = useLenis()
+  const navRef = useRef<HTMLElement>(null)
+  const indicatorRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -37,6 +39,32 @@ export function Header() {
       document.documentElement.style.overflow = ''
     }
   }, [menuOpen, lenis])
+
+  // One shared underline that slides under whichever nav item is hovered, and back to the active page's
+  // item when the pointer leaves the nav — so only one item is ever underlined.
+  const moveIndicator = useCallback((link: HTMLElement | null | undefined) => {
+    const indicator = indicatorRef.current
+    if (!indicator) return
+    if (!link) {
+      indicator.style.opacity = '0'
+      return
+    }
+    indicator.style.opacity = '1'
+    indicator.style.width = `${link.offsetWidth}px`
+    indicator.style.transform = `translateX(${link.offsetLeft}px)`
+  }, [])
+
+  const moveToActive = useCallback(() => {
+    moveIndicator(navRef.current?.querySelector<HTMLElement>('a[aria-current="page"]'))
+  }, [moveIndicator])
+
+  useEffect(() => {
+    moveToActive()
+    window.addEventListener('resize', moveToActive)
+    // Label widths change once the web font finishes loading.
+    document.fonts?.ready.then(moveToActive)
+    return () => window.removeEventListener('resize', moveToActive)
+  }, [pathname, moveToActive])
 
   // The logo goes home from anywhere and resets the scroll — a plain link would do nothing when
   // the visitor is already on the homepage.
@@ -69,17 +97,20 @@ export function Header() {
           <img src={logo} alt="Unity Auto Group" className="h-9 w-auto sm:h-11" />
         </NavLink>
 
-        <nav className="nav-hover-effect nav-swipe hidden items-center gap-8 lg:flex">
+        <nav
+          ref={navRef}
+          onMouseLeave={moveToActive}
+          className="nav-hover-effect nav-swipe relative hidden items-center gap-8 lg:flex"
+        >
           {navItems.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
               end={item.path === '/'}
+              onMouseEnter={(event) => moveIndicator(event.currentTarget)}
               className={({ isActive }) =>
-                `relative text-xs font-medium tracking-widest uppercase transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-px after:bg-green-500 after:transition-all after:duration-200 after:content-[''] ${
-                  isActive
-                    ? 'text-white after:w-full'
-                    : 'text-gray-300 after:w-0 hover:text-white hover:after:w-full'
+                `relative text-xs font-medium tracking-widest uppercase transition-colors ${
+                  isActive ? 'text-white' : 'text-gray-300 hover:text-white'
                 }`
               }
             >
@@ -88,6 +119,11 @@ export function Header() {
               </span>
             </NavLink>
           ))}
+          <span
+            ref={indicatorRef}
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-1.5 left-0 h-px bg-green-500 opacity-0 transition-[transform,width,opacity] duration-500 ease-[cubic-bezier(0.65,0,0.35,1)]"
+          />
         </nav>
 
         <div className="flex items-center gap-3">
