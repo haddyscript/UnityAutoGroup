@@ -11,7 +11,7 @@ export function AnnouncementBar() {
               <span className="absolute inline-flex size-full animate-ping rounded-full bg-green-500 opacity-75" />
               <span className="relative inline-flex size-2 rounded-full bg-green-500" />
             </span>
-            Open Today: Hours (TBD)
+            Open 24 Hours
           </span>
           <span className="h-3 w-px bg-gray-500" aria-hidden="true" />
           <span className="inline-flex items-center gap-1.5">
