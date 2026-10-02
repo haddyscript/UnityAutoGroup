@@ -15,8 +15,8 @@ body {
   }
 }
 
-/* Nav text swipe: on hover the label slides up and out while a copy (from data-hover) slides up into
-   its place. The copy lives on an inner wrapper so the link's own ::after stays free for the underline. */
+/* Nav text swipe: on hover the label slides out to the left while a copy (from data-hover) slides in
+   from the right to take its place. The copy lives on an inner wrapper so the link's own ::after stays free for the underline. */
 .nav-hover-effect.nav-swipe .nav-swipe-text {
   position: relative;
   display: inline-block;
@@ -25,7 +25,9 @@ body {
 }
 .nav-hover-effect.nav-swipe .nav-swipe-text > span {
   display: inline-block;
-  transition: transform 0.3s, opacity 0.3s;
+  transition:
+    transform 0.6s cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 0.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .nav-hover-effect.nav-swipe .nav-swipe-text::after {
   content: attr(data-hover);
@@ -34,16 +36,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translateY(50%);
+  transform: translateX(100%);
   opacity: 0;
-  transition: transform 0.3s, opacity 0.3s;
+  transition:
+    transform 0.6s cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 0.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .nav-hover-effect.nav-swipe a:hover .nav-swipe-text::after {
-  transform: translateY(0%);
+  transform: translateX(0%);
   opacity: 1;
 }
 .nav-hover-effect.nav-swipe a:hover .nav-swipe-text > span {
-  transform: translateY(-100%);
+  transform: translateX(-100%);
   opacity: 0;
 }
 
