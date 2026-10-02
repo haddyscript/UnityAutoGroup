@@ -45,7 +45,7 @@ export function SitePreloader() {
       const value = progress.value
       count.textContent = String(Math.round(value)).padStart(2, '0')
       // The counter fills with green from the bottom up as the page loads.
-      count.style.backgroundImage = `linear-gradient(to top, #22c55e ${value}%, rgba(255,255,255,0.14) ${value}%)`
+      count.style.backgroundImage = `linear-gradient(to top, var(--accent) ${value}%, color-mix(in oklab, var(--color-white) 14%, transparent) ${value}%)`
       bar.style.transform = `scaleX(${value / 100})`
     }
 
@@ -139,7 +139,7 @@ export function SitePreloader() {
             aria-live="polite"
             style={{
               WebkitBackgroundClip: 'text',
-              backgroundImage: 'linear-gradient(to top, #22c55e 0%, rgba(255,255,255,0.14) 0%)',
+              backgroundImage: 'linear-gradient(to top, var(--accent) 0%, color-mix(in oklab, var(--color-white) 14%, transparent) 0%)',
             }}
             className="font-bebas mt-4 bg-clip-text text-[30vw] leading-[0.78] text-transparent sm:mt-6 sm:text-[24vw]"
           >

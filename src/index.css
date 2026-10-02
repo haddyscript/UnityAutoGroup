@@ -7,6 +7,40 @@ body {
   overflow-x: clip;
 }
 
+/* Colors that scripts read at runtime (GSAP cannot tween CSS variables or oklch), kept as hex. */
+:root {
+  --accent: #22c55e;
+  --reveal-dim: #4b5563;
+  --reveal-lit: #ffffff;
+}
+
+/* Light theme (the default): white background with a deep, premium green. Every component styles itself
+   with Tailwind's palette, so remapping the palette variables flips the whole site — black becomes
+   white, the gray scale inverts, and the bright green deepens so it holds contrast on white. */
+:root[data-theme='light'] {
+  color-scheme: light;
+  --color-black: #ffffff;
+  --color-white: #0c1410;
+  --color-gray-50: #0a0f0c;
+  --color-gray-100: #121a16;
+  --color-gray-200: #1e2823;
+  --color-gray-300: #34403a;
+  --color-gray-400: #4f5a54;
+  --color-gray-500: #6b756f;
+  --color-gray-600: #9aa29d;
+  --color-gray-700: #cfd5d1;
+  --color-gray-800: #e3e7e4;
+  --color-gray-900: #eef1ef;
+  --color-gray-950: #f6f8f7;
+  --color-green-300: #2f9e5f;
+  --color-green-400: #138a48;
+  --color-green-500: #0b6e3b;
+  --color-green-600: #085a30;
+  --accent: #0b6e3b;
+  --reveal-dim: #c3cac6;
+  --reveal-lit: #0c1410;
+}
+
 /* Tailwind v4 dropped the pointer cursor on buttons; restore it so every clickable button shows a hand. */
 @layer base {
   button:not(:disabled),
@@ -52,8 +86,8 @@ body {
 }
 
 ::selection {
-  background-color: #22c55e;
-  color: #000000;
+  background-color: var(--color-green-500);
+  color: var(--color-black);
 }
 
 @keyframes marquee {

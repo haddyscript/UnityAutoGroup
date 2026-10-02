@@ -5,6 +5,7 @@ import { Header } from './Header'
 import { ScrollToTop } from './ScrollToTop'
 import { SitePreloader } from './SitePreloader'
 import { StickyQuoteBar } from './StickyQuoteBar'
+import { ThemeToggle } from './ThemeToggle'
 
 // Pages where the trailing cursor is turned off.
 const noCursorPaths = ['/shop-service', '/mobile-service']
@@ -25,6 +26,7 @@ export function Layout() {
       </main>
       <Footer />
       <StickyQuoteBar />
+      <ThemeToggle />
     </div>
   )
 }

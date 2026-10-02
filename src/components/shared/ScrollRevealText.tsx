@@ -21,9 +21,10 @@ export function ScrollRevealText({ text, className = '' }: ScrollRevealTextProps
       type: 'words, chars',
       autoSplit: true,
       onSplit: (self) => {
-        gsap.set(self.chars, { color: '#4b5563' })
+        const styles = getComputedStyle(document.documentElement)
+        gsap.set(self.chars, { color: styles.getPropertyValue('--reveal-dim').trim() })
         return gsap.to(self.chars, {
-          color: '#ffffff',
+          color: styles.getPropertyValue('--reveal-lit').trim(),
           stagger: 0.03,
           ease: 'none',
           scrollTrigger: {
