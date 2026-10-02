@@ -70,7 +70,8 @@ export function ServiceOptionCard({ image, title, description }: ServiceOptionCa
         alt=""
         className="absolute inset-x-0 top-1/2 h-[130%] w-full object-cover will-change-transform"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/10" />
+      {/* Darken only behind the text so the photo stays clear above it. */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 via-35% to-transparent to-65%" />
       <div
         ref={shineRef}
         className="pointer-events-none absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0"
