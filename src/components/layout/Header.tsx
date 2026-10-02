@@ -123,7 +123,7 @@ export function Header() {
           <span
             ref={indicatorRef}
             aria-hidden="true"
-            className="pointer-events-none absolute -bottom-1.5 left-0 h-px bg-green-500 opacity-0 transition-[transform,width,opacity] duration-500 ease-[cubic-bezier(0.65,0,0.35,1)]"
+            className="pointer-events-none absolute -bottom-2 left-0 h-[3px] rounded-full bg-green-500 opacity-0 transition-[transform,width,opacity] duration-500 ease-[cubic-bezier(0.65,0,0.35,1)]"
           />
         </nav>
 
