@@ -1,9 +1,10 @@
-import { Award, Clock, Mail, MapPin, Phone, ShieldCheck, Wrench } from 'lucide-react'
+import { Award, Clock, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 import { navItems } from '../../data/nav'
 import { services } from '../../data/services'
 import { Container } from '../shared/Container'
 import { ButtonLink } from '../shared/Button'
+import logo from '../../assets/unity-auto-group-logo.webp'
 
 // Placeholder contact info, hours, and certifications — replace once Unity Auto Group confirms real details.
 const badges = [
@@ -19,17 +20,7 @@ export function Footer() {
     <footer className="border-t border-gray-800 bg-black">
       <div className="border-b border-gray-800">
         <Container className="flex flex-col gap-6 py-6 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-3">
-            <span className="flex size-11 items-center justify-center rounded-xl bg-green-500">
-              <Wrench className="text-black" size={22} />
-            </span>
-            <div>
-              <p className="text-lg font-bold text-white">
-                UNITY <span className="text-green-500">AUTO GROUP</span>
-              </p>
-              <p className="text-xs text-gray-500">Tagline (TBD)</p>
-            </div>
-          </div>
+          <img src={logo} alt="Unity Auto Group" className="h-16 w-auto self-start sm:h-20 sm:self-auto" />
 
           <div className="flex flex-wrap gap-3">
             {badges.map(({ icon: Icon, label }) => (
