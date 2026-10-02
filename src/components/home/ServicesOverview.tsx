@@ -85,7 +85,7 @@ export function ServicesOverview() {
 
   return (
     <section ref={sectionRef} className="border-t border-gray-800 bg-black">
-      <div ref={heroRef} className="relative overflow-hidden py-32 sm:py-40">
+      <div ref={heroRef} className="theme-dark relative overflow-hidden py-32 sm:py-40">
         <video
           ref={videoRef}
           className="absolute inset-0 h-full w-full object-cover"

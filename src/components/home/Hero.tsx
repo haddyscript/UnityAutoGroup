@@ -48,7 +48,7 @@ export function Hero() {
         <Marquee
           text="Unity Auto Group"
           className="w-56 sm:w-64"
-          textClassName="font-mono text-xs tracking-[0.3em] text-green-400 uppercase"
+          textClassName="font-mono text-xs tracking-[0.3em] text-green-500 uppercase"
         />
         <h1 className="mt-4 font-serif text-4xl text-white italic sm:text-5xl">
           We Come To You —

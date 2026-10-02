@@ -8,7 +8,7 @@ import { openQuotePopup } from '../lib/quote'
 export default function Services() {
   return (
     <>
-      <section className="relative overflow-hidden py-16 text-center sm:py-20">
+      <section className="theme-dark relative overflow-hidden py-16 text-center sm:py-20">
         <img src={serviceRepairBg} alt="" className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-black/60" />
 
