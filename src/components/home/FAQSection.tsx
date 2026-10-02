@@ -33,7 +33,7 @@ export function FAQSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-20">
+    <section ref={sectionRef} className="pt-32 pb-20 sm:pt-40">
       <Container className="max-w-3xl">
         <div data-reveal>
           <SectionHeading eyebrow="FAQ" title="Frequently Asked Questions" />
