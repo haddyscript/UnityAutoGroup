@@ -16,6 +16,10 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Slides play in order, then back to the first, crossfading between them. A slide with two clips plays
 // them side by side (first on the left) and moves on once both have finished.
+// Seconds each slide stays up before the next fades in, so visitors see every face quickly. A slide whose
+// clips end sooner moves on early.
+const SLIDE_SECONDS = 3.5
+
 const heroSlides = [
   [blackAndWhiteSmilingVideo, manWorkingVideo],
   [heroVideo],
@@ -59,6 +63,22 @@ export function Hero() {
       clip.currentTime = 0
       clip.play().catch(() => {})
     }
+
+    const advance = window.setTimeout(
+      () => setActiveSlide((activeSlide + 1) % heroSlides.length),
+      SLIDE_SECONDS * 1000,
+    )
+    // Once the crossfade is over, stop the clips that faded out so only the visible slide keeps decoding.
+    const pauseHidden = window.setTimeout(() => {
+      clipRefs.current.forEach((clips, slideIndex) => {
+        if (slideIndex !== activeSlide) clips.forEach((clip) => clip?.pause())
+      })
+    }, 800)
+
+    return () => {
+      window.clearTimeout(advance)
+      window.clearTimeout(pauseHidden)
+    }
   }, [activeSlide])
 
   const handleClipEnded = (slideIndex: number, clipIndex: number) => {
@@ -75,7 +95,7 @@ export function Hero() {
         {heroSlides.map((clips, slideIndex) => (
           <div
             key={slideIndex}
-            className={`absolute inset-0 grid grid-rows-1 gap-px transition-opacity duration-1000 ${
+            className={`absolute inset-0 grid grid-rows-1 gap-px transition-opacity duration-700 ${
               clips.length > 1 ? 'grid-cols-2' : ''
             } ${slideIndex === activeSlide ? 'opacity-100' : 'opacity-0'}`}
           >
