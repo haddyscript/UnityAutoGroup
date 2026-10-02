@@ -18,6 +18,7 @@ export function CustomCursor() {
 
     const mouse = { x: -100, y: -100 }
     const pos = { x: -100, y: -100 }
+    const dotPos = { x: -100, y: -100 }
     let hovering = false
     let hoverScale = 1
     let visible = false
@@ -29,8 +30,8 @@ export function CustomCursor() {
       hovering = (event.target as Element | null)?.closest?.(INTERACTIVE) != null
       if (!visible) {
         // Snap into place on first appearance instead of flying in from the corner.
-        pos.x = mouse.x
-        pos.y = mouse.y
+        dotPos.x = pos.x = mouse.x
+        dotPos.y = pos.y = mouse.y
         visible = true
         dot.style.opacity = '1'
         ring.style.opacity = '1'
@@ -43,21 +44,44 @@ export function CustomCursor() {
       ring.style.opacity = '0'
     }
 
-    const tick = () => {
-      pos.x += (mouse.x - pos.x) * 0.15
-      pos.y += (mouse.y - pos.y) * 0.15
-      hoverScale += ((hovering ? 1.6 : 1) - hoverScale) * 0.2
+    let angle = 0
+    let stretch = 0
+    let last = performance.now()
+
+    // Frame-rate independent easing: the same feel at 60Hz and 120Hz+.
+    const ease = (rate: number, dt: number) => 1 - Math.pow(1 - rate, dt / 16.667)
+
+    const tick = (now: number) => {
+      const dt = Math.min(now - last, 64)
+      last = now
+
+      if (!visible) {
+        dotPos.x = pos.x = mouse.x
+        dotPos.y = pos.y = mouse.y
+      }
+
+      dotPos.x += (mouse.x - dotPos.x) * ease(0.5, dt)
+      dotPos.y += (mouse.y - dotPos.y) * ease(0.5, dt)
+      pos.x += (mouse.x - pos.x) * ease(0.12, dt)
+      pos.y += (mouse.y - pos.y) * ease(0.12, dt)
+      hoverScale += ((hovering ? 1.6 : 1) - hoverScale) * ease(0.15, dt)
 
       const dx = mouse.x - pos.x
       const dy = mouse.y - pos.y
       const distance = Math.hypot(dx, dy)
-      const angle = (Math.atan2(dy, dx) * 180) / Math.PI
-      const stretch = Math.min(distance / 60, 0.8)
 
-      dot.style.transform = `translate3d(${mouse.x}px, ${mouse.y}px, 0) translate(-50%, -50%)`
+      // Only re-aim when actually moving, and rotate along the shortest path, so the ring never spins or jitters at rest.
+      if (distance > 1) {
+        const target = (Math.atan2(dy, dx) * 180) / Math.PI
+        const delta = ((target - angle + 540) % 360) - 180
+        angle += delta * ease(0.25, dt)
+      }
+      stretch += (Math.min(distance / 80, 0.6) - stretch) * ease(0.2, dt)
+
+      dot.style.transform = `translate3d(${dotPos.x}px, ${dotPos.y}px, 0) translate(-50%, -50%)`
       ring.style.transform =
         `translate3d(${pos.x}px, ${pos.y}px, 0) translate(-50%, -50%) rotate(${angle}deg) ` +
-        `scale(${(1 + stretch) * hoverScale}, ${(1 - stretch * 0.4) * hoverScale})`
+        `scale(${(1 + stretch) * hoverScale}, ${(1 - stretch * 0.35) * hoverScale})`
 
       frame = requestAnimationFrame(tick)
     }
