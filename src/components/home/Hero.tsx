@@ -2,6 +2,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useRef, useState } from 'react'
 import heroVideo from '../../assets/videos/home-hero-video.mp4'
+import happyFacesVideo from '../../assets/videos/happy-faces-mechanics.mp4'
 import mechanicVideo from '../../assets/videos/mechanic-repairing.mp4'
 import { ButtonLink } from '../shared/Button'
 import { Marquee } from '../shared/Marquee'
@@ -9,7 +10,7 @@ import { Marquee } from '../shared/Marquee'
 gsap.registerPlugin(ScrollTrigger)
 
 // Played in order, then back to the first, crossfading between clips.
-const heroVideos = [heroVideo, mechanicVideo]
+const heroVideos = [heroVideo, mechanicVideo, happyFacesVideo]
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
