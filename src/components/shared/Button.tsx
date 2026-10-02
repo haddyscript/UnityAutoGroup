@@ -15,22 +15,22 @@ const sweepClasses: Record<ButtonVariant, string> = {
 }
 
 const baseClasses =
-  'group relative inline-flex items-center justify-center overflow-hidden rounded-full px-6 py-2.5 text-xs font-semibold uppercase tracking-wide transition-shadow duration-200'
+  'group relative inline-flex items-center justify-center overflow-hidden rounded-full px-6 py-2.5 text-xs font-semibold uppercase tracking-wide transition-shadow duration-500 ease-[cubic-bezier(0.65,0,0.35,1)]'
 
 function ButtonContent({ variant, children }: { variant: ButtonVariant; children: ReactNode }) {
   return (
     <>
       <span
-        className={`absolute inset-0 bg-white transition-transform duration-300 ease-out ${sweepClasses[variant]}`}
+        className={`absolute inset-0 bg-white transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] ${sweepClasses[variant]}`}
       />
       <span
-        className={`relative z-10 inline-flex items-center gap-1.5 transition-colors duration-200 ${
+        className={`relative z-10 inline-flex items-center gap-1.5 transition-colors duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] ${
           variant === 'secondary' ? 'group-hover:text-black' : ''
         }`}
       >
         {children}
         <ArrowRight
-          className="w-0 -translate-x-1 opacity-0 transition-all duration-300 ease-out group-hover:w-4 group-hover:translate-x-0 group-hover:opacity-100"
+          className="w-0 -translate-x-1 opacity-0 transition-all duration-600 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:w-4 group-hover:translate-x-0 group-hover:opacity-100"
           size={16}
         />
       </span>
