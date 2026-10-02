@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react'
 
-const INTERACTIVE = 'a, button, [role="button"], input, select, textarea, label, summary'
+const CLICKABLE = 'a, button, [role="button"]'
 
 // Trailing cursor: a dot that follows the pointer and a ring that lags well behind it, growing
 // (while staying circular) in proportion to how far behind it is. Only on fine pointers (no touch) and
-// skipped entirely for reduced motion. The native cursor stays visible so hand/text cursors still work.
+// skipped entirely for reduced motion. Hidden over buttons and links, where the native hand cursor takes over.
 export function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
@@ -19,29 +19,32 @@ export function CustomCursor() {
     const mouse = { x: -100, y: -100 }
     const pos = { x: -100, y: -100 }
     const dotPos = { x: -100, y: -100 }
-    let hovering = false
-    let hoverScale = 1
     let visible = false
+    let overClickable = false
     let frame = 0
 
     const onMove = (event: PointerEvent) => {
       mouse.x = event.clientX
       mouse.y = event.clientY
-      hovering = (event.target as Element | null)?.closest?.(INTERACTIVE) != null
+      overClickable = (event.target as Element | null)?.closest?.(CLICKABLE) != null
       if (!visible) {
         // Snap into place on first appearance instead of flying in from the corner.
         dotPos.x = pos.x = mouse.x
         dotPos.y = pos.y = mouse.y
         visible = true
-        dot.style.opacity = '1'
-        ring.style.opacity = '1'
       }
+      updateOpacity()
     }
 
     const onLeave = () => {
       visible = false
-      dot.style.opacity = '0'
-      ring.style.opacity = '0'
+      updateOpacity()
+    }
+
+    const updateOpacity = () => {
+      const opacity = visible && !overClickable ? '1' : '0'
+      dot.style.opacity = opacity
+      ring.style.opacity = opacity
     }
 
     let grow = 0
@@ -63,7 +66,6 @@ export function CustomCursor() {
       dotPos.y += (mouse.y - dotPos.y) * ease(0.5, dt)
       pos.x += (mouse.x - pos.x) * ease(0.06, dt)
       pos.y += (mouse.y - pos.y) * ease(0.06, dt)
-      hoverScale += ((hovering ? 1.6 : 1) - hoverScale) * ease(0.15, dt)
 
       const dx = mouse.x - pos.x
       const dy = mouse.y - pos.y
@@ -75,7 +77,7 @@ export function CustomCursor() {
       dot.style.transform = `translate3d(${dotPos.x}px, ${dotPos.y}px, 0) translate(-50%, -50%)`
       ring.style.transform =
         `translate3d(${pos.x}px, ${pos.y}px, 0) translate(-50%, -50%) ` +
-        `scale(${(1 + grow) * hoverScale})`
+        `scale(${1 + grow})`
 
       frame = requestAnimationFrame(tick)
     }
