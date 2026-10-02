@@ -19,7 +19,7 @@ gsap.registerPlugin(ScrollTrigger)
 // them side by side (first on the left) and moves on once both have finished.
 // Seconds each slide stays up before the next fades in, so visitors see every face quickly. A slide whose
 // clips end sooner moves on early.
-const SLIDE_SECONDS = 3.5
+const SLIDE_SECONDS = 5.5
 
 const heroSlides = [
   [blackAndWhiteSmilingVideo, manWorkingVideo],
