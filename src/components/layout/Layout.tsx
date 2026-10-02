@@ -1,4 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom'
+import { CustomCursor } from './CustomCursor'
 import { Footer } from './Footer'
 import { Header } from './Header'
 import { ScrollToTop } from './ScrollToTop'
@@ -12,6 +13,7 @@ export function Layout() {
   return (
     <div className="flex min-h-screen flex-col bg-black text-gray-100">
       <SitePreloader />
+      <CustomCursor />
       <ScrollToTop />
       <Header />
       <main className={`flex-1 pb-20 lg:pb-0 ${isHome ? '' : 'pt-20 sm:pt-24 lg:pt-32'}`}>
