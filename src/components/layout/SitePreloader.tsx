@@ -2,6 +2,7 @@ import { gsap } from 'gsap'
 import { useLenis } from 'lenis/react'
 import { useEffect, useRef, useState } from 'react'
 import logo from '../../assets/unity-auto-group-logo.webp'
+import { markPreloaderRevealed } from '../../lib/preloader'
 
 // Hold the splash long enough to read, but never let a slow video keep visitors waiting.
 const MIN_DURATION = 1.6
@@ -82,6 +83,7 @@ export function SitePreloader() {
         .to(labels.children, { opacity: 0, y: -10, duration: 0.3, stagger: 0.05, ease: 'power2.in' })
         .to(rail, { opacity: 0, duration: 0.3, ease: 'power2.in' }, '<')
         .to(content, { opacity: 0, y: -40, scale: 0.97, duration: 0.55, ease: 'power2.in' }, '-=0.2')
+        .call(markPreloaderRevealed)
         .to(curtainTop, { yPercent: -100, duration: 1, ease: 'power4.inOut' }, '-=0.15')
         .to(curtainBottom, { yPercent: 100, duration: 1, ease: 'power4.inOut' }, '<')
     }

@@ -9,6 +9,7 @@ import happyFacesVideo from '../../assets/videos/happy-faces-mechanics.mp4'
 import mechanicVideo from '../../assets/videos/mechanic-repairing.mp4'
 import { Phone } from 'lucide-react'
 import { business } from '../../data/business'
+import { usePreloaderRevealed } from '../../lib/preloader'
 import { ButtonAnchor, ButtonLink } from '../shared/Button'
 import { Marquee } from '../shared/Marquee'
 
@@ -34,6 +35,7 @@ export function Hero() {
   const clipRefs = useRef<(HTMLVideoElement | null)[][]>(heroSlides.map(() => []))
   const endedClips = useRef(new Set<number>())
   const [activeSlide, setActiveSlide] = useState(0)
+  const revealed = usePreloaderRevealed()
   // Later clips wait to download until the first one is playing, so they never slow the first paint.
   const [preloadRest, setPreloadRest] = useState(false)
   const fadeRef = useRef<HTMLDivElement>(null)
@@ -57,6 +59,9 @@ export function Hero() {
   }, [])
 
   useEffect(() => {
+    // Behind the splash the first slide just plays; the sequence starts over once the page is revealed.
+    if (!revealed) return
+
     endedClips.current.clear()
     for (const clip of clipRefs.current[activeSlide]) {
       if (!clip) continue
@@ -79,10 +84,10 @@ export function Hero() {
       window.clearTimeout(advance)
       window.clearTimeout(pauseHidden)
     }
-  }, [activeSlide])
+  }, [activeSlide, revealed])
 
   const handleClipEnded = (slideIndex: number, clipIndex: number) => {
-    if (slideIndex !== activeSlide) return
+    if (!revealed || slideIndex !== activeSlide) return
     endedClips.current.add(clipIndex)
     if (endedClips.current.size === heroSlides[slideIndex].length) {
       setActiveSlide((slideIndex + 1) % heroSlides.length)
