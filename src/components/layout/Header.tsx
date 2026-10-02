@@ -69,7 +69,7 @@ export function Header() {
           <img src={logo} alt="Unity Auto Group" className="h-9 w-auto sm:h-11" />
         </NavLink>
 
-        <nav className="hidden items-center gap-8 lg:flex">
+        <nav className="nav-hover-effect nav-swipe hidden items-center gap-8 lg:flex">
           {navItems.map((item) => (
             <NavLink
               key={item.path}
@@ -83,7 +83,9 @@ export function Header() {
                 }`
               }
             >
-              {item.label}
+              <span className="nav-swipe-text" data-hover={item.label}>
+                <span>{item.label}</span>
+              </span>
             </NavLink>
           ))}
         </nav>
