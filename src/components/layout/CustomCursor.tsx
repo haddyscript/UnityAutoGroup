@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react'
 
 const INTERACTIVE = 'a, button, [role="button"], input, select, textarea, label, summary'
 
-// Trailing cursor: a dot pinned to the pointer and a ring that lags behind it, stretching along the
-// direction of travel in proportion to how far behind it is. Only on fine pointers (no touch) and
+// Trailing cursor: a dot that follows the pointer and a ring that lags well behind it, growing
+// (while staying circular) in proportion to how far behind it is. Only on fine pointers (no touch) and
 // skipped entirely for reduced motion. The native cursor stays visible so hand/text cursors still work.
 export function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null)
@@ -44,8 +44,7 @@ export function CustomCursor() {
       ring.style.opacity = '0'
     }
 
-    let angle = 0
-    let stretch = 0
+    let grow = 0
     let last = performance.now()
 
     // Frame-rate independent easing: the same feel at 60Hz and 120Hz+.
@@ -62,26 +61,21 @@ export function CustomCursor() {
 
       dotPos.x += (mouse.x - dotPos.x) * ease(0.5, dt)
       dotPos.y += (mouse.y - dotPos.y) * ease(0.5, dt)
-      pos.x += (mouse.x - pos.x) * ease(0.12, dt)
-      pos.y += (mouse.y - pos.y) * ease(0.12, dt)
+      pos.x += (mouse.x - pos.x) * ease(0.06, dt)
+      pos.y += (mouse.y - pos.y) * ease(0.06, dt)
       hoverScale += ((hovering ? 1.6 : 1) - hoverScale) * ease(0.15, dt)
 
       const dx = mouse.x - pos.x
       const dy = mouse.y - pos.y
       const distance = Math.hypot(dx, dy)
 
-      // Only re-aim when actually moving, and rotate along the shortest path, so the ring never spins or jitters at rest.
-      if (distance > 1) {
-        const target = (Math.atan2(dy, dx) * 180) / Math.PI
-        const delta = ((target - angle + 540) % 360) - 180
-        angle += delta * ease(0.25, dt)
-      }
-      stretch += (Math.min(distance / 80, 0.6) - stretch) * ease(0.2, dt)
+      // The further the ring trails behind, the bigger it grows — uniformly, so it stays a circle.
+      grow += (Math.min(distance / 120, 0.8) - grow) * ease(0.1, dt)
 
       dot.style.transform = `translate3d(${dotPos.x}px, ${dotPos.y}px, 0) translate(-50%, -50%)`
       ring.style.transform =
-        `translate3d(${pos.x}px, ${pos.y}px, 0) translate(-50%, -50%) rotate(${angle}deg) ` +
-        `scale(${(1 + stretch) * hoverScale}, ${(1 - stretch * 0.35) * hoverScale})`
+        `translate3d(${pos.x}px, ${pos.y}px, 0) translate(-50%, -50%) ` +
+        `scale(${(1 + grow) * hoverScale})`
 
       frame = requestAnimationFrame(tick)
     }
