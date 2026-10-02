@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Styles that only apply in the light theme, e.g. light:bg-black/80. */
+@custom-variant light (&:where([data-theme='light'], [data-theme='light'] *));
+
 /* Keep the page from ever scrolling sideways. clip rather than hidden, so html/body do not
    become scroll containers and break sticky positioning. */
 html,
@@ -39,6 +42,28 @@ body {
   --accent: #0b6e3b;
   --reveal-dim: #c3cac6;
   --reveal-lit: #0c1410;
+}
+
+/* Keeps a section dark in the light theme too (the hero video reads best under a dark overlay with
+   white text). Restores the dark palette for everything inside; the premium green buttons stay as they
+   are, and only the lighter greens brighten so green text holds up on dark. */
+:root[data-theme='light'] .theme-dark {
+  color-scheme: dark;
+  --color-black: #000;
+  --color-white: #fff;
+  --color-gray-50: oklch(98.5% 0.002 247.839);
+  --color-gray-100: oklch(96.7% 0.003 264.542);
+  --color-gray-200: oklch(92.8% 0.006 264.531);
+  --color-gray-300: oklch(87.2% 0.01 258.338);
+  --color-gray-400: oklch(70.7% 0.022 261.325);
+  --color-gray-500: oklch(55.1% 0.027 264.364);
+  --color-gray-600: oklch(44.6% 0.03 256.802);
+  --color-gray-700: oklch(37.3% 0.034 259.733);
+  --color-gray-800: oklch(27.8% 0.033 256.848);
+  --color-gray-900: oklch(21% 0.034 264.665);
+  --color-gray-950: oklch(13% 0.028 261.692);
+  --color-green-300: oklch(87.1% 0.15 154.449);
+  --color-green-400: oklch(79.2% 0.209 151.711);
 }
 
 /* Tailwind v4 dropped the pointer cursor on buttons; restore it so every clickable button shows a hand. */

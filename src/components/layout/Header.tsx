@@ -81,7 +81,8 @@ export function Header() {
   const headerState = menuOpen
     ? 'border-transparent bg-black'
     : transparent
-      ? 'border-transparent bg-transparent'
+      ? // Dark text needs a backdrop to stay readable over the hero video in the light theme.
+        'border-transparent bg-transparent light:border-white/10 light:bg-black/80 light:shadow-sm light:backdrop-blur-md'
       : 'border-white/10 bg-black/85 shadow-lg shadow-black/30 backdrop-blur-md'
 
   return (
