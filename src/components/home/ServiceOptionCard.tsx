@@ -62,7 +62,7 @@ export function ServiceOptionCard({ image, title, description }: ServiceOptionCa
       data-reveal
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative h-96 overflow-hidden rounded-xl border border-gray-800 transition-[border-color,box-shadow] duration-300 hover:border-green-500/40 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_40px_rgba(34,197,94,0.15)]"
+      className="theme-dark relative h-96 overflow-hidden rounded-xl border border-gray-800 transition-[border-color,box-shadow] duration-300 hover:border-green-500/40 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_40px_rgba(34,197,94,0.15)]"
     >
       <img
         ref={imageRef}
