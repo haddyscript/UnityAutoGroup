@@ -17,11 +17,11 @@ gsap.registerPlugin(ScrollTrigger)
 // Slides play in order, then back to the first, crossfading between them. A slide with two clips plays
 // them side by side (first on the left) and moves on once both have finished.
 const heroSlides = [
+  [blackAndWhiteSmilingVideo, manWorkingVideo],
   [heroVideo],
   [mechanicVideo],
   [happyFacesVideo],
   [happyFacesVideo2],
-  [blackAndWhiteSmilingVideo, manWorkingVideo],
 ]
 
 export function Hero() {
