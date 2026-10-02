@@ -70,17 +70,17 @@ export function HowItWorks() {
         scrollTrigger,
       })
 
-      gsap.fromTo(
-        '[data-line]',
-        { scaleX: 0 },
-        { scaleX: 1, duration: 1, ease: 'power3.inOut', scrollTrigger },
-      )
-
-      gsap.fromTo(
-        '[data-line-dot]',
-        { left: '0%', opacity: 1 },
-        { left: '100%', opacity: 0, duration: 1, ease: 'power2.inOut', scrollTrigger },
-      )
+      // The line draws across with the glowing dot riding its leading edge, then the dot fades out at the end.
+      gsap
+        .timeline({ scrollTrigger })
+        .fromTo('[data-line]', { scaleX: 0 }, { scaleX: 1, duration: 1.8, ease: 'power2.inOut' }, 0)
+        .fromTo(
+          '[data-line-dot]',
+          { left: '0%', opacity: 1 },
+          { left: '100%', duration: 1.8, ease: 'power2.inOut' },
+          0,
+        )
+        .to('[data-line-dot]', { opacity: 0, duration: 0.4 }, 1.6)
     }, sectionRef)
 
     return () => ctx.revert()
@@ -94,13 +94,14 @@ export function HowItWorks() {
         </div>
 
         <div className="relative mt-16">
+          <div className="absolute top-6 right-0 left-0 hidden h-0.5 -translate-y-1/2 bg-green-500/10 lg:block" />
           <div
             data-line
-            className="absolute top-6 right-0 left-0 hidden h-px origin-left bg-gradient-to-r from-green-500/70 via-green-500/25 to-transparent lg:block"
+            className="absolute top-6 right-0 left-0 hidden h-0.5 origin-left -translate-y-1/2 bg-gradient-to-r from-green-500 via-green-400 to-green-500/50 shadow-[0_0_10px_rgba(74,222,128,0.6)] lg:block"
           />
           <div
             data-line-dot
-            className="absolute top-6 left-0 hidden size-2 -translate-y-1/2 rounded-full bg-green-400 opacity-0 shadow-[0_0_12px_4px_rgba(74,222,128,0.8)] lg:block"
+            className="absolute top-6 left-0 hidden size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-green-300 opacity-0 shadow-[0_0_16px_6px_rgba(74,222,128,0.9)] lg:block"
           />
 
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
