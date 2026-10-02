@@ -94,9 +94,14 @@ export function Header() {
     >
       <AnnouncementBar />
 
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:py-3">
         <NavLink to="/" onClick={handleLogoClick}>
-          <img src={logo} alt="Unity Auto Group" className="h-9 w-auto sm:h-11" />
+          {/* The faint shadow outlines the logo's white lettering on the light theme's white header. */}
+          <img
+            src={logo}
+            alt="Unity Auto Group"
+            className="h-12 w-auto sm:h-14 lg:h-20 light:drop-shadow-[0_1px_1.5px_rgba(0,0,0,0.45)]"
+          />
         </NavLink>
 
         <nav

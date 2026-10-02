@@ -225,7 +225,7 @@ export function SymptomChecker() {
 
           <div
             ref={panelRef}
-            className="relative scroll-mt-28 overflow-hidden rounded-2xl border border-white/10 bg-gray-950 p-6 shadow-2xl shadow-black/60 sm:p-8 lg:sticky lg:top-24"
+            className="relative scroll-mt-28 overflow-hidden rounded-2xl border border-white/10 bg-gray-950 p-6 shadow-2xl shadow-black/60 sm:p-8 lg:sticky lg:top-40"
           >
             <div
               ref={shimmerRef}

@@ -21,7 +21,7 @@ export function Layout() {
       {showCursor && <CustomCursor />}
       <ScrollToTop />
       <Header />
-      <main className={`flex-1 pb-20 lg:pb-0 ${isHome ? '' : 'pt-20 sm:pt-24 lg:pt-32'}`}>
+      <main className={`flex-1 pb-20 lg:pb-0 ${isHome ? '' : 'pt-24 sm:pt-28 lg:pt-40'}`}>
         <Outlet />
       </main>
       <Footer />

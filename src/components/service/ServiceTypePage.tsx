@@ -100,7 +100,7 @@ export function ServiceTypePage({ type, title, intro, details, steps, booking }:
         </Container>
       </section>
 
-      <section id="book" className="scroll-mt-28 mx-auto max-w-3xl px-4 pt-16 pb-8 text-center lg:scroll-mt-36">
+      <section id="book" className="scroll-mt-28 mx-auto max-w-3xl px-4 pt-16 pb-8 text-center lg:scroll-mt-40">
         <h2 className="text-2xl font-bold text-white sm:text-3xl">{booking.title}</h2>
         <p className="mt-2 text-gray-400">{booking.note}</p>
       </section>
